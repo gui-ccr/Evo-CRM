@@ -43,9 +43,9 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
     onClose();
   };
 
-  const handleChange = (field: keyof Cliente, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const handleChange = <T extends keyof Cliente>(field: T, value: Cliente[T]) => {
+  setFormData(prev => ({ ...prev, [field]: value }));
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
