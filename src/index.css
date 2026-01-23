@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonte principal */
+  --font-family-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Cores principais EVO Coaching - Paleta Profissional */
+  --color-evo-orange: #F57600;
+  --color-evo-coral: #F57600;
+  --color-evo-purple: #00296B;
+  --color-evo-indigo: #00296B;
+  --color-evo-violet: #0077B6;
+  --color-evo-red: #E63946;
+
+  /* Escala de Azul para fundos - Da paleta */
+  --color-evo-cyan-50: #65B4D7;
+  --color-evo-cyan-100: #0077B6;
+  --color-evo-cyan-200: #005f8f;
+  --color-evo-cyan-300: #00296B;
+  --color-evo-cyan-400: #00215a;
+  --color-evo-cyan-500: #001949;
+  --color-evo-cyan-600: #001138;
+  --color-evo-cyan-700: #000927;
+  --color-evo-cyan-800: #000116;
+  --color-evo-cyan-900: #000000;
+
+  /* Escala de tons para textos e elementos */
+  --color-evo-dark-50: #00296B;
+  --color-evo-dark-100: #00215a;
+  --color-evo-dark-200: #001949;
+  --color-evo-dark-300: #001138;
+  --color-evo-dark-400: #475569;
+  --color-evo-dark-500: #64748b;
+  --color-evo-dark-600: #94a3b8;
+  --color-evo-dark-700: #cbd5e1;
+  --color-evo-dark-800: #e5e5e5;
+  --color-evo-dark-900: #f2f4f3;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif !important;
+}
+
+* {
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif !important;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
