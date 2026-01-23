@@ -16,8 +16,8 @@ export type QuickStat = {
 export type Sale = {
   id: string;
   customerName: string;
-  vehicleModel: string;
-  vehicleBrand: string;
+  mentoriaModel: string;
+  mentoriaBrand: string;
   saleDate: string;
   amount: number;
   status: 'completed' | 'pending' | 'cancelled';

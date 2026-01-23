@@ -11,5 +11,5 @@ const paymentLabels = {
 };
 
 export function PaymentBadge({ method }: PaymentBadgeProps) {
-  return <span className="text-sm text-zinc-300">{paymentLabels[method]}</span>;
+  return <span className="text-sm text-zinc-900">{paymentLabels[method]}</span>;
 }

@@ -6,15 +6,15 @@ interface StatusBadgeProps {
 
 const statusConfig = {
   completed: {
-    className: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    className: 'bg-emerald-600/40 text-emerald-900 border-emerald-500/30',
     label: 'Concluída',
   },
   pending: {
-    className: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+    className: 'bg-yellow-600/40 text-yellow-900 border-yellow-500/30',
     label: 'Pendente',
   },
   cancelled: {
-    className: 'bg-red-500/20 text-red-400 border-red-500/30',
+    className: 'bg-red-600/40 text-red-900 border-red-500/30',
     label: 'Cancelada',
   },
 };

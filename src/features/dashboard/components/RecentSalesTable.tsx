@@ -21,12 +21,12 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
       <table className="w-full">
         <thead>
           <tr className="border-b border-zinc-700">
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Cliente</th>
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Veículo</th>
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Data</th>
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Valor</th>
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Pagamento</th>
-            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-300">Status</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Cliente</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Mentoria</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Data</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Valor</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Pagamento</th>
+            <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -39,16 +39,16 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
                 <div className="font-medium text-evo-dark-50">{sale.customerName}</div>
               </td>
               <td className="py-4 px-4">
-                <div className="font-medium text-evo-dark-50">{sale.vehicleModel}</div>
-                <div className="text-sm text-zinc-400">{sale.vehicleBrand}</div>
+                <div className="font-medium text-evo-dark-50">{sale.mentoriaModel}</div>
+                <div className="text-sm text-zinc-900">{sale.mentoriaBrand}</div>
               </td>
-              <td className="py-4 px-4 text-sm text-zinc-300">
+              <td className="py-4 px-4 text-sm text-zinc-900">
                 {formatDate(sale.saleDate)}
               </td>
               <td className="py-4 px-4 font-semibold text-emerald-400">
                 {formatCurrency(sale.amount)}
               </td>
-              <td className="py-4 px-4">
+              <td className="py-4 px-4 ">
                 <PaymentBadge method={sale.paymentMethod} />
               </td>
               <td className="py-4 px-4">
