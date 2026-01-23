@@ -1,4 +1,4 @@
-export type ClienteStatus = 'ativo' | 'inativo' | 'pendente';
+export type ClienteStatus = 'ativo' | 'inativo' | 'pendente' | 'lead';
 
 export interface Cliente {
   id: string;
