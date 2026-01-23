@@ -44,12 +44,42 @@ html, body, #root {
   width: 100%;
 }
 
+html {
+  /* Melhora o smooth scroll */
+  scroll-behavior: smooth;
+  /* Previne zoom no iOS quando foca em inputs */
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif !important;
+  /* Melhora a rolagem no mobile */
+  -webkit-overflow-scrolling: touch;
+  /* Previne pull-to-refresh acidental */
+  overscroll-behavior-y: contain;
 }
 
 * {
   font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif !important;
+  /* Melhora o tap no mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Melhora o foco em inputs no mobile */
+input, textarea, select, button {
+  font-size: 16px !important;
+}
+
+/* Previne zoom horizontal no mobile */
+@media (max-width: 768px) {
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    position: relative;
+  }
 }
 
 @keyframes skeleton-loading {

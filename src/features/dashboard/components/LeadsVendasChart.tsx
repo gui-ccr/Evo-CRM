@@ -1,4 +1,27 @@
 import { TrendingUp } from 'lucide-react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 interface LeadsVendasChartProps {
   title?: string;
@@ -25,114 +48,182 @@ export function LeadsVendasChart({
     { dia: '30', leads: 68, vendas: 14 },
   ];
 
-  const maxValue = Math.max(
-    ...data.map(d => Math.max(d.leads, d.vendas))
-  );
-
-  const createPath = (values: number[], color: string) => {
-    const points = values.map((value, index) => {
-      const x = (index / (values.length - 1)) * 100;
-      const y = 100 - (value / maxValue) * 100;
-      return `${x},${y}`;
-    }).join(' ');
-
-    return (
-      <polyline
-        points={points}
-        fill="none"
-        stroke={color}
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    );
-  };
-
-  const leadsValues = data.map(d => d.leads);
-  const vendasValues = data.map(d => d.vendas);
-
   const totalLeads = data.reduce((sum, d) => sum + d.leads, 0);
   const totalVendas = data.reduce((sum, d) => sum + d.vendas, 0);
   const taxaConversao = ((totalVendas / totalLeads) * 100).toFixed(1);
 
+  const chartData = {
+    labels: data.map(d => `Dia ${d.dia}`),
+    datasets: [
+      {
+        label: 'Novos Leads',
+        data: data.map(d => d.leads),
+        borderColor: 'rgb(78, 205, 196)',
+        backgroundColor: 'rgba(78, 205, 196, 0.1)',
+        yAxisID: 'y',
+        tension: 0.4,
+        fill: true,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: 'rgb(78, 205, 196)',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      },
+      {
+        label: 'Vendas Concluídas',
+        data: data.map(d => d.vendas),
+        borderColor: 'rgb(245, 118, 0)',
+        backgroundColor: 'rgba(245, 118, 0, 0.1)',
+        yAxisID: 'y1',
+        tension: 0.4,
+        fill: true,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: 'rgb(245, 118, 0)',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: 'index' as const,
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+        labels: {
+          padding: 15,
+          font: {
+            size: 12,
+            family: 'DM Sans',
+          },
+          color: '#00296B',
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 41, 107, 0.95)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+          family: 'DM Sans',
+          weight: 'bold' as const,
+        },
+        bodyFont: {
+          size: 13,
+          family: 'DM Sans',
+        },
+        cornerRadius: 8,
+        displayColors: true,
+        callbacks: {
+          label: function(context: any) {
+            const label = context.dataset.label || '';
+            const value = context.parsed.y;
+            return `${label}: ${value}`;
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+            family: 'DM Sans',
+          },
+          color: '#64748b',
+        },
+      },
+      y: {
+        type: 'linear' as const,
+        display: true,
+        position: 'left' as const,
+        title: {
+          display: true,
+          text: 'Leads',
+          font: {
+            size: 12,
+            family: 'DM Sans',
+            weight: 'bold' as const,
+          },
+          color: 'rgb(78, 205, 196)',
+        },
+        grid: {
+          color: 'rgba(0, 41, 107, 0.1)',
+        },
+        ticks: {
+          font: {
+            size: 11,
+            family: 'DM Sans',
+          },
+          color: '#64748b',
+        },
+      },
+      y1: {
+        type: 'linear' as const,
+        display: true,
+        position: 'right' as const,
+        title: {
+          display: true,
+          text: 'Vendas',
+          font: {
+            size: 12,
+            family: 'DM Sans',
+            weight: 'bold' as const,
+          },
+          color: 'rgb(245, 118, 0)',
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+            family: 'DM Sans',
+          },
+          color: '#64748b',
+        },
+      },
+    },
+  };
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-          <h3 className="text-lg font-semibold text-evo-indigo">{title}</h3>
-          <p className="text-sm text-evo-dark-400">{subtitle}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-evo-indigo">{title}</h3>
+          <p className="text-xs sm:text-sm text-evo-dark-400">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-2 text-emerald-400">
-          <TrendingUp size={20} />
-          <span className="text-sm font-medium">Taxa: {taxaConversao}%</span>
+        <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
+          <TrendingUp size={18} className="sm:w-5 sm:h-5" />
+          <span className="text-xs sm:text-sm font-medium">Taxa de Conversão: {taxaConversao}%</span>
         </div>
       </div>
 
-      <div className="mb-6">
-        <svg
-          viewBox="0 0 100 60"
-          className="w-full h-64"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="leadsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#4ECDC4" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#4ECDC4" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="vendasGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#FF6B35" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#FF6B35" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-
-          {createPath(leadsValues, '#4ECDC4')}
-          {createPath(vendasValues, '#FF6B35')}
-
-          {data.map((point, index) => {
-            const x = (index / (data.length - 1)) * 100;
-            const yLeads = 100 - (point.leads / maxValue) * 100;
-            const yVendas = 100 - (point.vendas / maxValue) * 100;
-
-            return (
-              <g key={index}>
-                <circle
-                  cx={x}
-                  cy={yLeads}
-                  r="0.8"
-                  fill="#4ECDC4"
-                  className="hover:r-1.5 transition-all cursor-pointer"
-                />
-                <circle
-                  cx={x}
-                  cy={yVendas}
-                  r="0.8"
-                  fill="#FF6B35"
-                  className="hover:r-1.5 transition-all cursor-pointer"
-                />
-              </g>
-            );
-          })}
-        </svg>
+      <div className="h-64 sm:h-72 lg:h-80 mb-4">
+        <Line data={chartData} options={options} />
       </div>
 
-      <div className="flex items-center justify-center gap-8 mb-4">
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 border-t border-evo-purple/20">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-evo-cyan"></div>
-          <span className="text-sm text-evo-dark-400">Novos Leads</span>
-          <span className="text-sm font-bold text-evo-indigo">{totalLeads}</span>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-evo-cyan"></div>
+          <span className="text-xs sm:text-sm text-evo-dark-400">Total de Leads</span>
+          <span className="text-sm sm:text-base font-bold text-evo-indigo">{totalLeads}</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-evo-orange"></div>
-          <span className="text-sm text-evo-dark-400">Vendas</span>
-          <span className="text-sm font-bold text-evo-indigo">{totalVendas}</span>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-evo-orange"></div>
+          <span className="text-xs sm:text-sm text-evo-dark-400">Total de Vendas</span>
+          <span className="text-sm sm:text-base font-bold text-evo-indigo">{totalVendas}</span>
         </div>
-      </div>
-
-      <div className="flex items-center justify-between text-xs text-evo-dark-400 px-2">
-        {data.map((point, index) => (
-          <span key={index}>{point.dia}</span>
-        ))}
       </div>
     </div>
   );

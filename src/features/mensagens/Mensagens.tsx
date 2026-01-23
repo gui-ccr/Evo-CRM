@@ -35,7 +35,7 @@ export function Mensagens() {
   };
 
   return (
-    <div className="p-8 space-y-8 bg-evo-cyan-100 min-h-screen">
+    <div className="p-3 sm:p-4 md:p-6 lg:p-8 space-y-4 sm:space-y-6 md:space-y-8 bg-evo-cyan-100 min-h-screen">
       <MensagensHeader onNewDisparo={handleNewDisparo} />
 
       <Card title="">
@@ -43,12 +43,12 @@ export function Mensagens() {
       </Card>
 
       <Card title="Templates de Mensagens">
-        <div className="mb-4">
+        <div className="mb-3 sm:mb-4">
           <button
             onClick={() => setShowEditor(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-zinc-300 text-black font-semibold rounded-lg hover:bg-zinc-400 transition-colors  border border-zinc-500"
+            className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-zinc-300 text-black font-semibold rounded-lg hover:bg-zinc-400 transition-colors border border-zinc-500 touch-manipulation cursor-pointer w-full sm:w-auto text-sm sm:text-base"
           >
-            <Plus size={20} />
+            <Plus size={18} className="sm:w-5 sm:h-5" />
             Criar Novo Template
           </button>
         </div>

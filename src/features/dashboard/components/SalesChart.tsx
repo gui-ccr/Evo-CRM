@@ -1,4 +1,23 @@
 import { TrendingUp } from 'lucide-react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface SalesChartProps {
   title?: string;
@@ -9,55 +28,130 @@ export function SalesChart({
   title = "Vendas dos Últimos 6 Meses",
   subtitle = "Comparativo mensal"
 }: SalesChartProps) {
-  const months = ['Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'];
+  const months = ['Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro'];
   const values = [850000, 920000, 1050000, 980000, 1100000, 1200000];
-  const maxValue = Math.max(...values);
+
+  const totalVendas = values.reduce((a, b) => a + b, 0);
+  const mediaVendas = totalVendas / values.length;
+
+  const chartData = {
+    labels: months,
+    datasets: [
+      {
+        label: 'Vendas (R$)',
+        data: values,
+        backgroundColor: [
+          'rgba(245, 118, 0, 0.8)',
+          'rgba(245, 118, 0, 0.8)',
+          'rgba(245, 118, 0, 0.8)',
+          'rgba(245, 118, 0, 0.8)',
+          'rgba(245, 118, 0, 0.8)',
+          'rgba(245, 118, 0, 0.9)',
+        ],
+        borderColor: [
+          'rgba(245, 118, 0, 1)',
+          'rgba(245, 118, 0, 1)',
+          'rgba(245, 118, 0, 1)',
+          'rgba(245, 118, 0, 1)',
+          'rgba(245, 118, 0, 1)',
+          'rgba(245, 118, 0, 1)',
+        ],
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 41, 107, 0.95)',
+        padding: 12,
+        titleFont: {
+          size: 14,
+          family: 'DM Sans',
+          weight: 'bold' as const,
+        },
+        bodyFont: {
+          size: 13,
+          family: 'DM Sans',
+        },
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          label: function(context: any) {
+            const value = context.parsed.y;
+            return `R$ ${(value / 1000).toFixed(0)}K`;
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+            family: 'DM Sans',
+          },
+          color: '#64748b',
+        },
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: 'rgba(0, 41, 107, 0.1)',
+        },
+        ticks: {
+          font: {
+            size: 11,
+            family: 'DM Sans',
+          },
+          color: '#64748b',
+          callback: function(value: any) {
+            return `R$ ${(value / 1000).toFixed(0)}K`;
+          }
+        },
+      },
+    },
+  };
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-          <h3 className="text-lg font-semibold text-evo-dark-50">{title}</h3>
-          <p className="text-sm text-evo-dark-400">{subtitle}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-evo-dark-50">{title}</h3>
+          <p className="text-xs sm:text-sm text-evo-dark-400">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-2 text-emerald-400">
-          <TrendingUp size={20} />
-          <span className="text-sm font-medium">+24% vs semestre anterior</span>
+        <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
+          <TrendingUp size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
+          <span className="text-xs sm:text-sm font-medium">+24% vs semestre anterior</span>
         </div>
       </div>
 
-      <div className="flex items-end justify-between gap-4 h-48">
-        {months.map((month, index) => {
-          const height = (values[index] / maxValue) * 100;
-          return (
-            <div key={month} className="flex-1 flex flex-col items-center gap-2">
-              <div className="w-full flex items-end justify-center h-40">
-                <div
-                  className="w-full bg-gradient-to-t from-evo-orange to-evo-coral rounded-t-lg transition-all hover:opacity-80 cursor-pointer relative group"
-                  style={{ height: `${height}%` }}
-                >
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-zinc-200 text-evo-dark-50 text-xs px-2 py-1 rounded whitespace-nowrap border border-evo-purple/20">
-                    R$ {(values[index] / 1000).toFixed(0)}K
-                  </div>
-                </div>
-              </div>
-              <span className="text-xs font-medium text-evo-dark-400">{month}</span>
-            </div>
-          );
-        })}
+      <div className="h-64 sm:h-72 lg:h-80 mb-4">
+        <Bar data={chartData} options={options} />
       </div>
 
-      <div className="mt-6 pt-4 border-t border-evo-purple/20 flex items-center justify-between text-sm">
-        <div>
-          <span className="text-evo-dark-400">Média mensal: </span>
-          <span className="font-semibold text-evo-dark-50">
-            R$ {(values.reduce((a, b) => a + b, 0) / values.length / 1000).toFixed(0)}K
+      <div className="mt-4 pt-4 border-t border-evo-purple/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 text-sm">
+        <div className="flex items-center gap-2">
+          <span className="text-xs sm:text-sm text-evo-dark-400">Média mensal:</span>
+          <span className="font-semibold text-sm sm:text-base text-evo-dark-50">
+            R$ {(mediaVendas / 1000).toFixed(0)}K
           </span>
         </div>
-        <div>
-          <span className="text-evo-dark-400">Total no período: </span>
-          <span className="font-semibold text-evo-dark-50">
-            R$ {(values.reduce((a, b) => a + b, 0) / 1000000).toFixed(1)}M
+        <div className="flex items-center gap-2">
+          <span className="text-xs sm:text-sm text-evo-dark-400">Total no período:</span>
+          <span className="font-semibold text-sm sm:text-base text-evo-orange">
+            R$ {(totalVendas / 1000000).toFixed(2)}M
           </span>
         </div>
       </div>

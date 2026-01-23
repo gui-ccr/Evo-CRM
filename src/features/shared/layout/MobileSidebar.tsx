@@ -35,18 +35,19 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
         onClick={onClose}
       />
 
-      <aside className="fixed top-0 left-0 h-full w-64 bg-evo-indigo z-50 lg:hidden transform transition-transform duration-300">
-        <div className="flex items-center justify-between p-4 border-b border-white/10">
-          <span className="text-[#DCDCDD] font-bold text-xl">EVO Coaching</span>
+      <aside className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] bg-evo-indigo z-50 lg:hidden transform transition-transform duration-300 overflow-y-auto">
+        <div className="flex items-center justify-between p-4 border-b border-white/10 sticky top-0 bg-evo-indigo z-10">
+          <span className="text-[#DCDCDD] font-bold text-lg sm:text-xl">EVO Coaching</span>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors touch-manipulation cursor-pointer"
+            aria-label="Fechar menu"
           >
             <X size={24} className="text-[#DCDCDD]" />
           </button>
         </div>
 
-        <nav className="py-4">
+        <nav className="py-2">
           {menus.map((item) => {
             const isActive = location.pathname.startsWith(item.path);
             return (
@@ -54,14 +55,14 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                 key={item.name}
                 to={item.path}
                 onClick={onClose}
-                className={`flex items-center gap-4 px-6 py-4 transition-colors ${
+                className={`flex items-center gap-3 px-5 py-4 transition-colors touch-manipulation ${
                   isActive
                     ? "bg-evo-orange text-black font-bold"
-                    : "text-[#DCDCDD] hover:bg-white/10"
+                    : "text-[#DCDCDD] hover:bg-white/10 active:bg-white/20"
                 }`}
               >
-                <item.icon size={20} />
-                <span>{item.name}</span>
+                <item.icon size={20} className="flex-shrink-0" />
+                <span className="text-sm sm:text-base">{item.name}</span>
               </Link>
             );
           })}

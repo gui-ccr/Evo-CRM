@@ -6,8 +6,8 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
   return (
     <div>
-      <h1 className="text-3xl font-bold text-zinc-100">{title}</h1>
-      <p className="text-zinc-200 mt-1">{subtitle}</p>
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-100">{title}</h1>
+      <p className="text-sm sm:text-base text-zinc-200 mt-1">{subtitle}</p>
     </div>
   );
 }
