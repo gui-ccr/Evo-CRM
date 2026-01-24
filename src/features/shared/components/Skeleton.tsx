@@ -6,7 +6,7 @@ interface SkeletonProps {
 export function Skeleton({ className = '', style }: SkeletonProps) {
   return (
     <div
-      className={`animate-pulse bg-gradient-to-r from-evo-purple/10 via-evo-purple/20 to-evo-purple/10 bg-[length:200%_100%] rounded ${className}`}
+      className={`animate-pulse bg-gradient-to-r from-indigo-500/10 via-indigo-500/20 to-indigo-500/10 bg-[length:200%_100%] rounded ${className}`}
       style={{
         animation: 'skeleton-loading 1.5s ease-in-out infinite',
         ...style,
@@ -17,7 +17,7 @@ export function Skeleton({ className = '', style }: SkeletonProps) {
 
 export function SkeletonCard() {
   return (
-    <div className="bg-zinc-200 rounded-xl p-6 border-2 border-evo-purple/20 shadow-lg">
+    <div className="bg-zinc-200 rounded-xl p-6 border border-zinc-600 shadow-lg">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <Skeleton className="h-4 w-32 mb-2" />
@@ -33,14 +33,14 @@ export function SkeletonCard() {
 export function SkeletonTable({ rows = 5 }: { rows?: number }) {
   return (
     <div className="space-y-3">
-      <div className="flex gap-4 pb-3 border-b-2 border-evo-purple/20">
+      <div className="flex gap-4 pb-3 border-b-2 border-zinc-600">
         <Skeleton className="h-4 w-32" />
         <Skeleton className="h-4 w-40" />
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-4 w-32" />
       </div>
       {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="flex gap-4 items-center py-4 border-b border-evo-purple/10">
+        <div key={i} className="flex gap-4 items-center py-4 border-b border-indigo-500/10">
           <Skeleton className="h-4 w-32" />
           <Skeleton className="h-4 w-40" />
           <Skeleton className="h-4 w-24" />
@@ -80,7 +80,7 @@ export function SkeletonList({ items = 3 }: { items?: number }) {
       {Array.from({ length: items }).map((_, i) => (
         <div
           key={i}
-          className="bg-zinc-200 rounded-lg p-6 border-2 border-evo-purple/20"
+          className="bg-zinc-200 rounded-lg p-6 border border-zinc-600"
         >
           <div className="flex items-start gap-4">
             <Skeleton className="w-16 h-16 rounded-lg flex-shrink-0" />

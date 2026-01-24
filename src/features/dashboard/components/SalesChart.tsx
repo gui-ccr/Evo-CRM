@@ -41,20 +41,20 @@ export function SalesChart({
         label: 'Vendas (R$)',
         data: values,
         backgroundColor: [
-          'rgba(245, 118, 0, 0.8)',
-          'rgba(245, 118, 0, 0.8)',
-          'rgba(245, 118, 0, 0.8)',
-          'rgba(245, 118, 0, 0.8)',
-          'rgba(245, 118, 0, 0.8)',
-          'rgba(245, 118, 0, 0.9)',
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(99, 102, 241, 0.8)',
+          'rgba(99, 102, 241, 0.9)',
         ],
         borderColor: [
-          'rgba(245, 118, 0, 1)',
-          'rgba(245, 118, 0, 1)',
-          'rgba(245, 118, 0, 1)',
-          'rgba(245, 118, 0, 1)',
-          'rgba(245, 118, 0, 1)',
-          'rgba(245, 118, 0, 1)',
+          'rgba(99, 102, 241, 1)',
+          'rgba(99, 102, 241, 1)',
+          'rgba(99, 102, 241, 1)',
+          'rgba(99, 102, 241, 1)',
+          'rgba(99, 102, 241, 1)',
+          'rgba(99, 102, 241, 1)',
         ],
         borderWidth: 2,
         borderRadius: 8,
@@ -128,8 +128,8 @@ export function SalesChart({
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-          <h3 className="text-base sm:text-lg font-semibold text-evo-dark-50">{title}</h3>
-          <p className="text-xs sm:text-sm text-evo-dark-400">{subtitle}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-zinc-400">{title}</h3>
+          <p className="text-xs sm:text-sm text-zinc-600">{subtitle}</p>
         </div>
         <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
           <TrendingUp size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
@@ -141,16 +141,16 @@ export function SalesChart({
         <Bar data={chartData} options={options} />
       </div>
 
-      <div className="mt-4 pt-4 border-t border-evo-purple/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 text-sm">
+      <div className="mt-4 pt-4 border-t border-zinc-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <span className="text-xs sm:text-sm text-evo-dark-400">Média mensal:</span>
-          <span className="font-semibold text-sm sm:text-base text-evo-dark-50">
+          <span className="text-xs sm:text-sm text-zinc-600">Média mensal:</span>
+          <span className="font-semibold text-sm sm:text-base text-indigo-500">
             R$ {(mediaVendas / 1000).toFixed(0)}K
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs sm:text-sm text-evo-dark-400">Total no período:</span>
-          <span className="font-semibold text-sm sm:text-base text-evo-orange">
+          <span className="text-xs sm:text-sm text-zinc-600">Total no período:</span>
+          <span className="font-semibold text-sm sm:text-base text-indigo-500">
             R$ {(totalVendas / 1000000).toFixed(2)}M
           </span>
         </div>

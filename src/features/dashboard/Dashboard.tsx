@@ -12,7 +12,7 @@ export function Dashboard() {
   const { stats, sales, alerts, quickStats } = useDashboardData();
 
   return (
-    <div className="p-8 space-y-8 bg-evo-cyan-100 min-h-screen">
+    <div className="p-8 space-y-8 bg-evo-cyan-900 min-h-screen">
       <DashboardHeader
         title="Dashboard Nexus EVO"
         subtitle="Visão executiva do seu negócio de coaching"

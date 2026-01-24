@@ -88,20 +88,20 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-zinc-200 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-zinc-200 border-b-2 border-evo-purple/20 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-evo-indigo">Criar Novo Template</h2>
+        <div className="sticky top-0 bg-zinc-200 border-b-2 border-zinc-600 p-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-indigo-500">Criar Novo Template</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-evo-orange rounded-lg transition-colors"
           >
-            <X size={24} className="text-evo-dark-400" />
+            <X size={24} className="text-zinc-600" />
           </button>
         </div>
 
         <div className="p-6 space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+              <label className="block text-sm font-medium text-zinc-600 mb-2">
                 Nome do Template
               </label>
               <input
@@ -109,18 +109,18 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 placeholder="Ex: Boas-vindas WhatsApp"
-                className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+                className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+              <label className="block text-sm font-medium text-zinc-600 mb-2">
                 Tipo
               </label>
               <select
                 value={tipo}
                 onChange={(e) => setTipo(e.target.value as TemplateType)}
-                className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+                className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
               >
                 <option value="whatsapp">WhatsApp</option>
                 <option value="email">E-mail</option>
@@ -130,7 +130,7 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
 
           {tipo === 'email' && (
             <div>
-              <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+              <label className="block text-sm font-medium text-zinc-600 mb-2">
                 Assunto do E-mail
               </label>
               <input
@@ -138,13 +138,13 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
                 value={assunto}
                 onChange={(e) => setAssunto(e.target.value)}
                 placeholder="Ex: Confirmação - Sua Mentoria EVO Coaching"
-                className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+                className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+            <label className="block text-sm font-medium text-zinc-600 mb-2">
               Variáveis Disponíveis
             </label>
             <div className="flex flex-wrap gap-2">
@@ -152,7 +152,7 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
                 <button
                   key={variavel.nome}
                   onClick={() => inserirVariavel(variavel.nome)}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-evo-purple/10 text-evo-purple rounded-lg hover:bg-evo-purple/20 transition-colors text-sm"
+                  className="flex items-center gap-1 px-3 py-1.5 bg-indigo-500/10 text-indigo-500 rounded-lg hover:bg-indigo-500/20 transition-colors text-sm"
                   title={variavel.descricao}
                 >
                   <Plus size={14} />
@@ -163,7 +163,7 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+            <label className="block text-sm font-medium text-zinc-600 mb-2">
               Mensagem
             </label>
             <textarea
@@ -172,9 +172,9 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
               onChange={(e) => setMensagem(e.target.value)}
               placeholder="Digite sua mensagem aqui... Clique nas variáveis acima para inserir."
               rows={8}
-              className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none resize-none"
+              className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none resize-none"
             />
-            <p className="text-xs text-evo-dark-400 mt-2">
+            <p className="text-xs text-zinc-600 mt-2">
               Use as variáveis acima para personalizar a mensagem
             </p>
           </div>
@@ -190,11 +190,11 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
               </button>
 
               {showPreview && (
-                <div className="p-4 bg-evo-orange-50 border-2 border-evo-purple/20 rounded-lg">
-                  <p className="text-xs font-medium text-evo-dark-400 mb-2">
+                <div className="p-4 bg-evo-orange-50 border border-zinc-600 rounded-lg">
+                  <p className="text-xs font-medium text-zinc-600 mb-2">
                     Preview (exemplo):
                   </p>
-                  <p className="text-sm text-evo-indigo whitespace-pre-wrap">
+                  <p className="text-sm text-indigo-500 whitespace-pre-wrap">
                     {gerarPreview()}
                   </p>
                 </div>
@@ -202,10 +202,10 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
             </div>
           )}
 
-          <div className="flex gap-3 pt-4 border-t-2 border-evo-purple/20">
+          <div className="flex gap-3 pt-4 border-t-2 border-zinc-600">
             <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 border-2 border-evo-purple/20 text-evo-indigo rounded-lg hover:border-evo-purple transition-colors font-semibold"
+              className="flex-1 px-6 py-3 border border-zinc-600 text-indigo-500 rounded-lg hover:border-indigo-500 transition-colors font-semibold"
             >
               Cancelar
             </button>

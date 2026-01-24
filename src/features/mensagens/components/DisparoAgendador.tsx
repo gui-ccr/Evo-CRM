@@ -51,28 +51,28 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-zinc-200 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-zinc-200 border-b-2 border-evo-purple/20 p-6 flex items-center justify-between">
+        <div className="sticky top-0 bg-zinc-200 border-b-2 border-zinc-600 p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Send className="text-evo-orange" size={28} />
-            <h2 className="text-2xl font-bold text-evo-indigo">Agendar Disparo</h2>
+            <h2 className="text-2xl font-bold text-indigo-500">Agendar Disparo</h2>
           </div>
           <button
             onClick={onClose}
             className="p-2 hover:bg-evo-cyan-50 rounded-lg transition-colors"
           >
-            <X size={24} className="text-evo-dark-400" />
+            <X size={24} className="text-zinc-600" />
           </button>
         </div>
 
         <div className="p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+            <label className="block text-sm font-medium text-zinc-600 mb-2">
               Selecione o Template
             </label>
             <select
               value={templateId}
               onChange={(e) => setTemplateId(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+              className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
             >
               <option value="">Escolha um template...</option>
               {templatesWhatsApp.length > 0 && (
@@ -97,32 +97,32 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
           </div>
 
           {templateSelecionado && (
-            <div className="p-4 bg-evo-cyan-50 border-2 border-evo-purple/20 rounded-lg">
+            <div className="p-4 bg-evo-cyan-50 border border-zinc-600 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 {templateSelecionado.tipo === 'whatsapp' ? (
                   <MessageCircle size={16} className="text-green-500" />
                 ) : (
                   <Mail size={16} className="text-blue-500" />
                 )}
-                <p className="text-sm font-medium text-evo-indigo">
+                <p className="text-sm font-medium text-indigo-500">
                   Preview do Template
                 </p>
               </div>
               {templateSelecionado.assunto && (
-                <p className="text-xs text-evo-dark-400 mb-1">
+                <p className="text-xs text-zinc-600 mb-1">
                   <strong>Assunto:</strong> {templateSelecionado.assunto}
                 </p>
               )}
-              <p className="text-sm text-evo-dark-500">{templateSelecionado.mensagem}</p>
+              <p className="text-sm text-zinc-2000">{templateSelecionado.mensagem}</p>
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-evo-dark-400 mb-3">
+            <label className="block text-sm font-medium text-zinc-600 mb-3">
               Destinatários
             </label>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 p-4 border-2 border-evo-purple/20 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
+              <label className="flex items-center gap-3 p-4 border border-zinc-600 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
                 <input
                   type="radio"
                   name="destinatarios"
@@ -133,12 +133,12 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                 />
                 <Users size={20} className="text-evo-orange" />
                 <div className="flex-1">
-                  <p className="font-medium text-evo-indigo">Todos os Leads</p>
-                  <p className="text-xs text-evo-dark-400">Enviar para toda a base (2.847 leads)</p>
+                  <p className="font-medium text-indigo-500">Todos os Leads</p>
+                  <p className="text-xs text-zinc-600">Enviar para toda a base (2.847 leads)</p>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-4 border-2 border-evo-purple/20 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
+              <label className="flex items-center gap-3 p-4 border border-zinc-600 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
                 <input
                   type="radio"
                   name="destinatarios"
@@ -149,8 +149,8 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                 />
                 <Users size={20} className="text-evo-orange" />
                 <div className="flex-1">
-                  <p className="font-medium text-evo-indigo">Leads Filtrados</p>
-                  <p className="text-xs text-evo-dark-400">Apenas leads do último evento (284 leads)</p>
+                  <p className="font-medium text-indigo-500">Leads Filtrados</p>
+                  <p className="text-xs text-zinc-600">Apenas leads do último evento (284 leads)</p>
                 </div>
               </label>
             </div>
@@ -162,9 +162,9 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                 type="checkbox"
                 checked={envioImediato}
                 onChange={(e) => setEnvioImediato(e.target.checked)}
-                className="w-4 h-4 text-evo-orange border-evo-purple/20 rounded focus:ring-evo-orange"
+                className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
               />
-              <span className="text-sm font-medium text-evo-indigo">
+              <span className="text-sm font-medium text-indigo-500">
                 Enviar imediatamente após confirmar
               </span>
             </label>
@@ -172,7 +172,7 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
             {!envioImediato && (
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+                  <label className="block text-sm font-medium text-zinc-600 mb-2">
                     <Calendar size={16} className="inline mr-1" />
                     Data
                   </label>
@@ -181,19 +181,19 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                     value={dataAgendamento}
                     onChange={(e) => setDataAgendamento(e.target.value)}
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+                    className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-evo-dark-400 mb-2">
+                  <label className="block text-sm font-medium text-zinc-600 mb-2">
                     Horário
                   </label>
                   <input
                     type="time"
                     value={horaAgendamento}
                     onChange={(e) => setHoraAgendamento(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-evo-purple/20 rounded-lg focus:border-evo-orange focus:outline-none"
+                    className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
                   />
                 </div>
               </div>
@@ -209,10 +209,10 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
             </div>
           )}
 
-          <div className="flex gap-3 pt-4 border-t-2 border-evo-purple/20">
+          <div className="flex gap-3 pt-4 border-t-2 border-zinc-600">
             <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 border-2 border-evo-purple/20 text-evo-indigo rounded-lg hover:border-evo-purple transition-colors font-semibold"
+              className="flex-1 px-6 py-3 border border-zinc-600 text-indigo-500 rounded-lg hover:border-indigo-500 transition-colors font-semibold"
             >
               Cancelar
             </button>

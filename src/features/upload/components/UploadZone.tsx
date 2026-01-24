@@ -20,7 +20,7 @@ export function UploadZone({ onFileSelect }: UploadZoneProps) {
     <div
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
-      className="border-2 border-dashed border-evo-purple/30 rounded-lg sm:rounded-xl p-6 sm:p-8 lg:p-12 text-center hover:border-evo-orange transition-colors cursor-pointer bg-zinc-200"
+      className="border-2 border-dashed border-zinc-600 rounded-lg sm:rounded-xl p-6 sm:p-8 lg:p-12 text-center hover:border-evo-orange transition-colors cursor-pointer bg-zinc-200"
     >
       <div className="flex flex-col items-center gap-3 sm:gap-4">
         <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-evo-orange/10 rounded-full flex items-center justify-center">
@@ -28,10 +28,10 @@ export function UploadZone({ onFileSelect }: UploadZoneProps) {
         </div>
 
         <div>
-          <h3 className="text-base sm:text-lg font-semibold text-evo-indigo mb-1 sm:mb-2">
+          <h3 className="text-base sm:text-lg font-semibold text-indigo-500 mb-1 sm:mb-2">
             Arraste e solte seu arquivo aqui
           </h3>
-          <p className="text-evo-dark-400 text-xs sm:text-sm mb-3 sm:mb-4">
+          <p className="text-zinc-600 text-xs sm:text-sm mb-3 sm:mb-4">
             ou clique para selecionar
           </p>
         </div>
@@ -46,7 +46,7 @@ export function UploadZone({ onFileSelect }: UploadZoneProps) {
           />
         </label>
 
-        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-xs sm:text-sm text-evo-dark-400 mt-2 sm:mt-4">
+        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-xs sm:text-sm text-zinc-600 mt-2 sm:mt-4">
           <FileSpreadsheet size={16} className="flex-shrink-0" />
           <span className="text-center">Formatos aceitos: Excel (.xlsx, .xls) ou CSV (.csv)</span>
         </div>

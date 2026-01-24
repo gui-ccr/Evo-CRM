@@ -10,17 +10,17 @@ export function LeadScoreBadge({ score, temperatura }: LeadScoreBadgeProps) {
   const config = {
     quente: {
       icon: Flame,
-      className: 'bg-red-500/20 text-red-500 border-red-500/30',
+      className: 'bg-red-600/30 text-red-800 border-red-500/30',
       iconColor: 'text-red-500',
     },
     morno: {
       icon: Droplet,
-      className: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
+      className: 'bg-yellow-600/30 text-yellow-800 border-yellow-500/30',
       iconColor: 'text-yellow-500',
     },
     frio: {
       icon: Snowflake,
-      className: 'bg-blue-500/20 text-blue-500 border-blue-500/30',
+      className: 'bg-blue-600/30 text-blue-800 border-blue-500/30',
       iconColor: 'text-blue-500',
     },
   };

@@ -81,7 +81,7 @@ export function RelatorioEntrega({ stats }: RelatorioEntregaProps) {
 
   return (
     <div>
-      <h3 className="text-base sm:text-lg font-semibold text-evo-indigo mb-4 sm:mb-6">
+      <h3 className="text-base sm:text-lg font-semibold text-indigo-500 mb-4 sm:mb-6">
         Relatório de Entrega - Últimos 30 Dias
       </h3>
 
@@ -100,8 +100,8 @@ export function RelatorioEntrega({ stats }: RelatorioEntregaProps) {
               <CheckCircle className="text-white" size={20} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs sm:text-sm text-evo-dark-400">Entregues</p>
-              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-evo-indigo">{stats.entregues}</p>
+              <p className="text-xs sm:text-sm text-zinc-600">Entregues</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-500">{stats.entregues}</p>
             </div>
             <div className="text-right">
               <p className="text-lg sm:text-xl lg:text-2xl font-bold text-emerald-500">{percentualEntregues}%</p>
@@ -113,8 +113,8 @@ export function RelatorioEntrega({ stats }: RelatorioEntregaProps) {
               <Eye className="text-white" size={20} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs sm:text-sm text-evo-dark-400">Lidos / Abertos</p>
-              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-evo-indigo">{stats.lidos}</p>
+              <p className="text-xs sm:text-sm text-zinc-600">Lidos / Abertos</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-500">{stats.lidos}</p>
             </div>
             <div className="text-right">
               <p className="text-lg sm:text-xl lg:text-2xl font-bold text-blue-500">{percentualLidos}%</p>
@@ -126,8 +126,8 @@ export function RelatorioEntrega({ stats }: RelatorioEntregaProps) {
               <XCircle className="text-white" size={20} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs sm:text-sm text-evo-dark-400">Erros / Números Inválidos</p>
-              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-evo-indigo">{stats.erros}</p>
+              <p className="text-xs sm:text-sm text-zinc-600">Erros / Números Inválidos</p>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold text-indigo-500">{stats.erros}</p>
             </div>
             <div className="text-right">
               <p className="text-lg sm:text-xl lg:text-2xl font-bold text-red-500">{percentualErros}%</p>

@@ -48,10 +48,10 @@ export function ProgressBar({ progresso, status, arquivo, detalhes }: ProgressBa
       <div className="flex items-center gap-3 mb-4">
         <Icon size={24} className={config.iconClass} />
         <div className="flex-1">
-          <p className="font-semibold text-evo-indigo">{config.label}</p>
-          <p className="text-sm text-evo-dark-400">{arquivo}</p>
+          <p className="font-semibold text-indigo-500">{config.label}</p>
+          <p className="text-sm text-zinc-600">{arquivo}</p>
         </div>
-        <span className="text-2xl font-bold text-evo-indigo">{progresso}%</span>
+        <span className="text-2xl font-bold text-indigo-500">{progresso}%</span>
       </div>
 
       <div className="relative w-full h-3 bg-evo-cyan-50 rounded-full overflow-hidden mb-4">
@@ -66,19 +66,19 @@ export function ProgressBar({ progresso, status, arquivo, detalhes }: ProgressBa
       {detalhes && (
         <div className="grid grid-cols-4 gap-4 text-center">
           <div>
-            <p className="text-xs text-evo-dark-400">Total</p>
-            <p className="text-lg font-bold text-evo-indigo">{detalhes.total}</p>
+            <p className="text-xs text-zinc-600">Total</p>
+            <p className="text-lg font-bold text-indigo-500">{detalhes.total}</p>
           </div>
           <div>
-            <p className="text-xs text-evo-dark-400">Processados</p>
+            <p className="text-xs text-zinc-600">Processados</p>
             <p className="text-lg font-bold text-blue-500">{detalhes.processados}</p>
           </div>
           <div>
-            <p className="text-xs text-evo-dark-400">Novos</p>
+            <p className="text-xs text-zinc-600">Novos</p>
             <p className="text-lg font-bold text-emerald-500">{detalhes.novos}</p>
           </div>
           <div>
-            <p className="text-xs text-evo-dark-400">Duplicados</p>
+            <p className="text-xs text-zinc-600">Duplicados</p>
             <p className="text-lg font-bold text-yellow-500">{detalhes.duplicados}</p>
           </div>
         </div>

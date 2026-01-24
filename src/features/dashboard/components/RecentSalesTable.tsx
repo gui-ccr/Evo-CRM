@@ -23,12 +23,12 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
         {sales.map((sale) => (
           <div
             key={sale.id}
-            className="bg-zinc-700/30 rounded-lg p-4 space-y-3 border border-zinc-700/50"
+            className="bg-zinc-700/30 rounded-lg p-4 space-y-3 border border-zinc-600/50"
           >
             <div className="flex justify-between items-start">
               <div>
-                <div className="font-semibold text-evo-dark-50 text-sm">{sale.customerName}</div>
-                <div className="text-xs text-zinc-900 mt-1">{formatDate(sale.saleDate)}</div>
+                <div className="font-semibold text-zinc-800 text-sm">{sale.customerName}</div>
+                <div className="text-xs text-zinc-400 mt-1">{formatDate(sale.saleDate)}</div>
               </div>
               <StatusBadge status={sale.status} />
             </div>
@@ -36,11 +36,11 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
             <div className="space-y-2">
               <div>
                 <div className="text-xs text-zinc-400">Mentoria</div>
-                <div className="text-sm font-medium text-evo-dark-50">{sale.mentoriaModel}</div>
-                <div className="text-xs text-zinc-900">{sale.mentoriaBrand}</div>
+                <div className="text-sm font-medium text-zinc-200">{sale.mentoriaModel}</div>
+                <div className="text-xs text-zinc-400">{sale.mentoriaBrand}</div>
               </div>
 
-              <div className="flex justify-between items-center pt-2 border-t border-zinc-700/50">
+              <div className="flex justify-between items-center pt-2 border-t border-zinc-600/50">
                 <div>
                   <div className="text-xs text-zinc-400">Pagamento</div>
                   <PaymentBadge method={sale.paymentMethod} />
@@ -59,35 +59,35 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-zinc-700">
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Cliente</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Mentoria</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Data</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Valor</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Pagamento</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-900">Status</th>
+            <tr className="border-b border-zinc-600">
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Cliente</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Mentoria</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Data</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Valor</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Pagamento</th>
+              <th className="text-left py-3 px-4 text-sm font-semibold text-zinc-800">Status</th>
             </tr>
           </thead>
           <tbody>
             {sales.map((sale) => (
               <tr
                 key={sale.id}
-                className="border-b border-zinc-700/50 hover:bg-zinc-700/30 transition-colors"
+                className="border-b border-zinc-600/50 hover:bg-zinc-700/20 transition-colors"
               >
                 <td className="py-4 px-4">
-                  <div className="font-medium text-evo-dark-50">{sale.customerName}</div>
+                  <div className="font-medium text-zinc-700">{sale.customerName}</div>
                 </td>
                 <td className="py-4 px-4">
-                  <div className="font-medium text-evo-dark-50">{sale.mentoriaModel}</div>
-                  <div className="text-sm text-zinc-900">{sale.mentoriaBrand}</div>
+                  <div className="font-medium text-zinc-700">{sale.mentoriaModel}</div>
+                  <div className="text-sm text-zinc-600">{sale.mentoriaBrand}</div>
                 </td>
-                <td className="py-4 px-4 text-sm text-zinc-900">
+                <td className="py-4 px-4 text-sm text-zinc-600">
                   {formatDate(sale.saleDate)}
                 </td>
-                <td className="py-4 px-4 font-semibold text-emerald-400">
+                <td className="py-4 px-4 font-semibold text-emerald-600">
                   {formatCurrency(sale.amount)}
                 </td>
-                <td className="py-4 px-4 ">
+                <td className="py-4 px-4">
                   <PaymentBadge method={sale.paymentMethod} />
                 </td>
                 <td className="py-4 px-4">

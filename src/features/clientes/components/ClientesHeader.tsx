@@ -8,7 +8,7 @@ export function ClientesHeader({ onAddClient }: ClientesHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="flex-1 min-w-0">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-100 mb-1 sm:mb-2">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-200 mb-1 sm:mb-2">
           Gestão de Clientes
         </h1>
         <p className="text-sm sm:text-base text-zinc-200">

@@ -35,8 +35,8 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
         onClick={onClose}
       />
 
-      <aside className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] bg-evo-indigo z-50 lg:hidden transform transition-transform duration-300 overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b border-white/10 sticky top-0 bg-evo-indigo z-10">
+      <aside className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] bg-evo-cyan-800 z-50 lg:hidden transform transition-transform duration-300 overflow-y-auto">
+        <div className="flex items-center justify-between p-4 border-b border-white/10 sticky top-0 bg-evo-cyan-800 z-10">
           <span className="text-[#DCDCDD] font-bold text-lg sm:text-xl">EVO Coaching</span>
           <button
             onClick={onClose}
@@ -57,7 +57,7 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                 onClick={onClose}
                 className={`flex items-center gap-3 px-5 py-4 transition-colors touch-manipulation ${
                   isActive
-                    ? "bg-evo-orange text-black font-bold"
+                    ? "bg-indigo-500 text-zinc-100 font-bold"
                     : "text-[#DCDCDD] hover:bg-white/10 active:bg-white/20"
                 }`}
               >

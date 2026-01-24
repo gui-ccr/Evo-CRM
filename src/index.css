@@ -7,34 +7,34 @@
   /* Cores principais EVO Coaching - Paleta Profissional */
   --color-evo-orange: #F57600;
   --color-evo-coral: #F57600;
-  --color-evo-purple: #00296B;
-  --color-evo-indigo: #00296B;
-  --color-evo-violet: #0077B6;
-  --color-evo-red: #E63946;
+  --color-evo-purple: #3D1F51;
+  --color-evo-indigo: #672977;
+  --color-evo-violet: #672977;
+  --color-evo-red: #B30224;
 
-  /* Escala de Azul para fundos - Da paleta */
-  --color-evo-cyan-50: #65B4D7;
-  --color-evo-cyan-100: #0077B6;
-  --color-evo-cyan-200: #005f8f;
-  --color-evo-cyan-300: #00296B;
-  --color-evo-cyan-400: #00215a;
-  --color-evo-cyan-500: #001949;
-  --color-evo-cyan-600: #001138;
-  --color-evo-cyan-700: #000927;
-  --color-evo-cyan-800: #000116;
-  --color-evo-cyan-900: #000000;
+  /* Escala de Zinc/Cinza Neutro para fundos - Base neutra */
+  --color-evo-cyan-50: #fafafa;
+  --color-evo-cyan-100: #f4f4f5;
+  --color-evo-cyan-200: #e4e4e7;
+  --color-evo-cyan-300: #d4d4d8;
+  --color-evo-cyan-400: #a1a1aa;
+  --color-evo-cyan-500: #71717a;
+  --color-evo-cyan-600: #52525b;
+  --color-evo-cyan-700: #3f3f46;
+  --color-evo-cyan-800: #27272a;
+  --color-evo-cyan-900: #18181b;
 
   /* Escala de tons para textos e elementos */
-  --color-evo-dark-50: #00296B;
-  --color-evo-dark-100: #00215a;
-  --color-evo-dark-200: #001949;
-  --color-evo-dark-300: #001138;
-  --color-evo-dark-400: #475569;
-  --color-evo-dark-500: #64748b;
-  --color-evo-dark-600: #94a3b8;
-  --color-evo-dark-700: #cbd5e1;
-  --color-evo-dark-800: #e5e5e5;
-  --color-evo-dark-900: #f2f4f3;
+  --color-evo-dark-50: #fafafa;
+  --color-evo-dark-100: #f4f4f5;
+  --color-evo-dark-200: #e4e4e7;
+  --color-evo-dark-300: #d4d4d8;
+  --color-evo-dark-400: #a1a1aa;
+  --color-evo-dark-500: #71717a;
+  --color-evo-dark-600: #52525b;
+  --color-evo-dark-700: #3f3f46;
+  --color-evo-dark-800: #27272a;
+  --color-evo-dark-900: #18181b;
 }
 
 html, body, #root {

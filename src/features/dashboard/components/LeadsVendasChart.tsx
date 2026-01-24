@@ -72,14 +72,14 @@ export function LeadsVendasChart({
       {
         label: 'Vendas Concluídas',
         data: data.map(d => d.vendas),
-        borderColor: 'rgb(245, 118, 0)',
-        backgroundColor: 'rgba(245, 118, 0, 0.1)',
+        borderColor: 'rgb(99, 102, 241)',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
         yAxisID: 'y1',
         tension: 0.4,
         fill: true,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointBackgroundColor: 'rgb(245, 118, 0)',
+        pointBackgroundColor: 'rgb(99, 102, 241)',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
       },
@@ -180,7 +180,7 @@ export function LeadsVendasChart({
             family: 'DM Sans',
             weight: 'bold' as const,
           },
-          color: 'rgb(245, 118, 0)',
+          color: 'rgb(99, 102, 241)',
         },
         grid: {
           drawOnChartArea: false,
@@ -200,8 +200,8 @@ export function LeadsVendasChart({
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-          <h3 className="text-base sm:text-lg font-semibold text-evo-indigo">{title}</h3>
-          <p className="text-xs sm:text-sm text-evo-dark-400">{subtitle}</p>
+          <h3 className="text-base sm:text-lg font-semibold text-zinc-400">{title}</h3>
+          <p className="text-xs sm:text-sm text-zinc-600">{subtitle}</p>
         </div>
         <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
           <TrendingUp size={18} className="sm:w-5 sm:h-5" />
@@ -213,16 +213,16 @@ export function LeadsVendasChart({
         <Line data={chartData} options={options} />
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 border-t border-evo-purple/20">
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 border-t border-zinc-600">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-evo-cyan"></div>
-          <span className="text-xs sm:text-sm text-evo-dark-400">Total de Leads</span>
-          <span className="text-sm sm:text-base font-bold text-evo-indigo">{totalLeads}</span>
+          <span className="text-xs sm:text-sm text-zinc-600">Total de Leads</span>
+          <span className="text-sm sm:text-base font-bold text-indigo-500">{totalLeads}</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-evo-orange"></div>
-          <span className="text-xs sm:text-sm text-evo-dark-400">Total de Vendas</span>
-          <span className="text-sm sm:text-base font-bold text-evo-indigo">{totalVendas}</span>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-indigo-500"></div>
+          <span className="text-xs sm:text-sm text-zinc-600">Total de Vendas</span>
+          <span className="text-sm sm:text-base font-bold text-indigo-500">{totalVendas}</span>
         </div>
       </div>
     </div>

@@ -20,8 +20,8 @@ export function Sidebar() {
     { name: "Configurações", icon: SettingsIcon, path: "/configuracoes" },
   ];
 
-  const sidebarColor = "bg-evo-indigo";
-  const shadowColorHex = "#0077B6";
+  const sidebarColor = "bg-evo-cyan-800";
+  const shadowColorHex = "#18181b";
 
   return (
     <aside className={`w-56 ${sidebarColor} py-10 flex flex-col z-10 relative h-full`}>
@@ -46,8 +46,8 @@ export function Sidebar() {
                 to={item.path}
                 className={`relative flex w-full items-center gap-4 px-8 h-14 transition-all duration-300 ease-in-out z-10
                     ${isActive
-                      ? `bg-evo-cyan-100 text-evo-indigo font-bold rounded-l-[50px] ml-4 w-[calc(100%-16px)] border-l-4 border-evo-orange`
-                      : "text-[#DCDCDD] hover:text-[#E5E5E5]"}`}>
+                      ? `bg-evo-cyan-900 text-zinc-100 font-bold rounded-l-[50px] ml-4 w-[calc(100%-16px)] border-l-4 border-indigo-500`
+                      : "text-evo-cyan-400 hover:text-evo-cyan-200"}`}>
                 <item.icon size={20} />
                 <span>{item.name}</span>
               </Link>

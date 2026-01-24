@@ -8,7 +8,7 @@ export function CrmIntelligence() {
   const { leads, filtros, setFiltros, totalLeads, leadsQuentesCount } = useCrmData();
 
   return (
-    <div className="p-8 space-y-8 bg-evo-cyan-100 min-h-screen">
+    <div className="p-8 space-y-8 bg-zinc-900 min-h-screen">
       <CrmHeader totalLeads={totalLeads} leadsQuentes={leadsQuentesCount} />
 
       <FiltrosInteligentes filtros={filtros} onFiltrosChange={setFiltros} />

@@ -12,7 +12,7 @@ export function ResponsiveTable({ children }: ResponsiveTableProps) {
       </div>
 
       <div className="md:hidden">
-        <p className="text-sm text-evo-dark-400 mb-4 p-4 bg-evo-orange/10 border border-evo-orange/20 rounded-lg">
+        <p className="text-sm text-zinc-600 mb-4 p-4 bg-evo-orange/10 border border-evo-orange/20 rounded-lg">
           💡 <strong>Dica:</strong> Para melhor visualização da tabela, gire seu dispositivo para o modo paisagem ou acesse pelo desktop.
         </p>
         <div className="overflow-x-auto">
