@@ -23,30 +23,30 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
         {sales.map((sale) => (
           <div
             key={sale.id}
-            className="bg-zinc-700/30 rounded-lg p-4 space-y-3 border border-zinc-600/50"
+            className="bg-zinc-300/30 rounded-lg p-4 space-y-3 border border-zinc-600/50"
           >
             <div className="flex justify-between items-start">
               <div>
-                <div className="font-semibold text-zinc-800 text-sm">{sale.customerName}</div>
-                <div className="text-xs text-zinc-400 mt-1">{formatDate(sale.saleDate)}</div>
+                <div className="font-semibold text-zinc-900 text-sm">{sale.customerName}</div>
+                <div className="text-xs text-zinc-600 mt-1">{formatDate(sale.saleDate)}</div>
               </div>
               <StatusBadge status={sale.status} />
             </div>
 
             <div className="space-y-2">
               <div>
-                <div className="text-xs text-zinc-400">Mentoria</div>
-                <div className="text-sm font-medium text-zinc-200">{sale.mentoriaModel}</div>
-                <div className="text-xs text-zinc-400">{sale.mentoriaBrand}</div>
+                <div className="text-xs text-zinc-900">Mentoria</div>
+                <div className="text-sm font-medium text-zinc-900">{sale.mentoriaModel}</div>
+                <div className="text-xs text-zinc-600">{sale.mentoriaBrand}</div>
               </div>
 
               <div className="flex justify-between items-center pt-2 border-t border-zinc-600/50">
                 <div>
-                  <div className="text-xs text-zinc-400">Pagamento</div>
+                  <div className="text-xs text-zinc-600">Pagamento</div>
                   <PaymentBadge method={sale.paymentMethod} />
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-zinc-400 mb-1">Valor</div>
+                  <div className="text-xs text-zinc-600 mb-1">Valor</div>
                   <div className="font-bold text-emerald-400">{formatCurrency(sale.amount)}</div>
                 </div>
               </div>
