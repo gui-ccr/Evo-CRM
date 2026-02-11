@@ -6,10 +6,25 @@ import { SalesChart } from './components/SalesChart';
 import { LeadsVendasChart } from './components/LeadsVendasChart';
 import { RecentSalesTable } from './components/RecentSalesTable';
 import { AlertsList } from './components/AlertsList';
+import { DashboardFilters } from './components/DashboardFilters';
 import { useDashboardData } from './hooks/useDashboardData';
 
 export function Dashboard() {
-  const { stats, sales, alerts, quickStats } = useDashboardData();
+  const {
+    stats,
+    sales,
+    alerts,
+    quickStats,
+    chartData,
+    filters,
+    updateFilter,
+    clearFilters,
+    hasActiveFilters,
+    statusOptions,
+    produtoOptions,
+    quickDatePreset,
+    applyQuickDate,
+  } = useDashboardData();
 
   return (
     <div className="p-8 space-y-8 bg-evo-cyan-900 min-h-screen">
@@ -18,17 +33,35 @@ export function Dashboard() {
         subtitle="Visão executiva do seu negócio de coaching"
       />
 
+      <DashboardFilters
+        filters={filters}
+        onFilterChange={updateFilter}
+        onClearFilters={clearFilters}
+        hasActiveFilters={hasActiveFilters}
+        statusOptions={statusOptions}
+        produtoOptions={produtoOptions}
+        quickDatePreset={quickDatePreset}
+        onQuickDate={applyQuickDate}
+      />
+
       <StatsGrid stats={stats} />
 
       <QuickStatsBar stats={quickStats} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card title="">
-          <LeadsVendasChart />
+          <LeadsVendasChart
+            labels={chartData.leadsChart.labels}
+            transacoes={chartData.leadsChart.transacoes}
+            valores={chartData.leadsChart.valores}
+          />
         </Card>
 
         <Card title="">
-          <SalesChart />
+          <SalesChart
+            labels={chartData.salesChart.labels}
+            values={chartData.salesChart.values}
+          />
         </Card>
       </div>
 

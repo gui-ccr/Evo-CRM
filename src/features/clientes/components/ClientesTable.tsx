@@ -55,11 +55,11 @@ export function ClientesTable({ clientes, onEdit }: ClientesTableProps) {
 
             <div className="flex justify-between items-center pt-2 border-t border-indigo-500/10">
               <div>
-                <div className="text-xs text-zinc-600">Origem</div>
+                <div className="text-xs text-zinc-600">Produtos</div>
                 <div className="text-sm font-medium text-indigo-500">{cliente.origem}</div>
               </div>
               <div className="text-right">
-                <div className="text-xs text-zinc-600 mb-1">Valor Total</div>
+                <div className="text-xs text-zinc-600 mb-1">LTV</div>
                 <div className="font-bold text-indigo-500">{formatCurrency(cliente.valorTotal)}</div>
               </div>
             </div>
@@ -79,13 +79,13 @@ export function ClientesTable({ clientes, onEdit }: ClientesTableProps) {
                 Contato
               </th>
               <th className="text-left py-4 px-4 text-sm font-semibold text-zinc-600">
-                Origem
+                Produtos
               </th>
               <th className="text-left py-4 px-4 text-sm font-semibold text-zinc-600">
-                Cadastro
+                1ª Compra
               </th>
               <th className="text-left py-4 px-4 text-sm font-semibold text-zinc-600">
-                Valor Total
+                LTV
               </th>
               <th className="text-left py-4 px-4 text-sm font-semibold text-zinc-600">
                 Status

@@ -1,139 +1,216 @@
+import { useMemo } from 'react';
+import { useTransactionData } from '../../../data/useTransactionData';
 import type { Stat, QuickStat, Sale, Alert } from '../../shared/types';
+import { formatCurrency, formatCompactNumber } from '../../shared/utils/formatters';
+
+function mapPaymentMethod(metodo: string): Sale['paymentMethod'] {
+  const m = metodo.toUpperCase();
+  if (m.includes('PIX')) return 'pix';
+  if (m.includes('CRÉDITO') || m.includes('CREDITO')) return 'cartao';
+  if (m.includes('MÁQUINA') || m.includes('MAQUINA') || m.includes('MAQ')) return 'maquina';
+  return 'cartao';
+}
+
+function mapStatus(status: string): Sale['status'] {
+  if (status === 'APROVADO') return 'completed';
+  if (status === 'ESTORNADO' || status === 'CHARGEBACK') return 'cancelled';
+  return 'pending';
+}
 
 export function useDashboardData() {
-  const stats: Stat[] = [
+  const txData = useTransactionData();
+  const { metrics, transactions, filters, updateFilter, clearFilters, hasActiveFilters, statusOptions, produtoOptions, quickDatePreset, applyQuickDate } = txData;
+
+  const stats: Stat[] = useMemo(() => [
     {
       id: '1',
-      label: 'Total de Leads Únicos',
-      value: 2847,
-      trend: '+324 novos este mês',
+      label: 'Total de Transações',
+      value: metrics.totalTransacoes,
+      trend: `${metrics.totalAprovados} aprovadas`,
       trendPositive: true,
       icon: 'users',
     },
     {
       id: '2',
-      label: 'Taxa de Conversão Geral',
-      value: '18.5%',
-      trend: '+2.3% vs mês passado',
-      trendPositive: true,
-      icon: 'trending-up',
-    },
-    {
-      id: '3',
-      label: 'ROI Estimado',
-      value: '487%',
-      trend: 'R$ 4.87 para cada R$ 1.00 investido',
+      label: 'Receita (Comissão)',
+      value: formatCurrency(metrics.receitaTotal),
+      trend: `Ticket médio: ${formatCurrency(metrics.ticketMedio)}`,
       trendPositive: true,
       icon: 'dollar-sign',
     },
     {
+      id: '3',
+      label: 'Taxa de Aprovação',
+      value: `${metrics.taxaAprovacao.toFixed(1)}%`,
+      trend: `${metrics.totalEstornados} estornos`,
+      trendPositive: metrics.taxaAprovacao >= 80,
+      icon: 'trending-up',
+    },
+    {
       id: '4',
-      label: 'Status dos Disparos',
-      value: '94.2%',
-      trend: 'Taxa de entrega hoje',
+      label: 'Compradores Únicos',
+      value: metrics.compradoresUnicos,
+      trend: `${Object.keys(metrics.vendasPorProduto).length} produtos`,
       trendPositive: true,
       icon: 'send',
     },
-  ];
+  ], [metrics]);
 
-  const sales: Sale[] = [
-    {
-      id: '1',
-      customerName: 'João Silva',
-      mentoriaModel: 'Mentoria Premium - 12 meses',
-      mentoriaBrand: 'Evento SP - Novembro',
-      saleDate: new Date(2025, 10, 25).toISOString(),
-      amount: 24000,
-      status: 'completed',
-      paymentMethod: 'financing',
-    },
-    {
-      id: '2',
-      customerName: 'Maria Santos',
-      mentoriaModel: 'Mentoria Executiva - 6 meses',
-      mentoriaBrand: 'Lançamento Digital',
-      saleDate: new Date(2025, 10, 24).toISOString(),
-      amount: 18000,
-      status: 'completed',
-      paymentMethod: 'cash',
-    },
-    {
-      id: '3',
-      customerName: 'Carlos Oliveira',
-      mentoriaModel: 'Programa Aceleração',
-      mentoriaBrand: 'Evento RJ - Outubro',
-      saleDate: new Date(2025, 10, 23).toISOString(),
-      amount: 12000,
-      status: 'pending',
-      paymentMethod: 'financing',
-    },
-    {
-      id: '4',
-      customerName: 'Ana Paula',
-      mentoriaModel: 'Mentoria Premium - 12 meses',
-      mentoriaBrand: 'Indicação Cliente',
-      saleDate: new Date(2025, 10, 22).toISOString(),
-      amount: 24000,
-      status: 'completed',
-      paymentMethod: 'leasing',
-    },
-    {
-      id: '5',
-      customerName: 'Roberto Lima',
-      mentoriaModel: 'Mentoria VIP - 24 meses',
-      mentoriaBrand: 'Evento SP - Novembro',
-      saleDate: new Date(2025, 10, 20).toISOString(),
-      amount: 48000,
-      status: 'completed',
-      paymentMethod: 'financing',
-    },
-  ];
+  const sales: Sale[] = useMemo(() => {
+    return transactions.slice(0, 10).map((t) => ({
+      id: t.id,
+      customerName: t.comprador,
+      mentoriaModel: t.produtoNormalizado,
+      mentoriaBrand: t.oferta,
+      saleDate: t.dataTransacao.toISOString(),
+      amount: t.comissao,
+      status: mapStatus(t.status),
+      paymentMethod: mapPaymentMethod(t.metodoPagamento),
+    }));
+  }, [transactions]);
 
-  const alerts: Alert[] = [
-    {
-      id: '1',
-      type: 'warning',
-      title: 'Aula ao Vivo Hoje',
-      message: 'Lembrete automático agendado para 284 leads às 18h.',
-      createdAt: new Date(2025, 10, 27, 10, 30).toISOString(),
-      priority: 'high',
-    },
-    {
-      id: '2',
+  const alerts: Alert[] = useMemo(() => {
+    const items: Alert[] = [];
+
+    if (metrics.totalEstornados > 0) {
+      items.push({
+        id: 'a1',
+        type: 'warning',
+        title: 'Estornos Detectados',
+        message: `${metrics.totalEstornados} transações estornadas (${formatCurrency(metrics.totalEstornos)}).`,
+        createdAt: new Date().toISOString(),
+        priority: 'high',
+      });
+    }
+
+    const topProduto = Object.entries(metrics.vendasPorProduto)
+      .sort(([, a], [, b]) => b.quantidade - a.quantidade)[0];
+    if (topProduto) {
+      items.push({
+        id: 'a2',
+        type: 'success',
+        title: 'Produto Mais Vendido',
+        message: `${topProduto[0]} com ${topProduto[1].quantidade} vendas.`,
+        createdAt: new Date().toISOString(),
+        priority: 'medium',
+      });
+    }
+
+    items.push({
+      id: 'a3',
       type: 'info',
-      title: 'Nova Lista Processada',
-      message: '156 novos leads do Evento SP adicionados ao sistema.',
-      createdAt: new Date(2025, 10, 27, 9, 15).toISOString(),
-      priority: 'medium',
-    },
-    {
-      id: '3',
-      type: 'success',
-      title: 'Campanha Concluída',
-      message: 'Disparo de WhatsApp para 500 leads finalizado com 96% de entrega.',
-      createdAt: new Date(2025, 10, 26, 16, 45).toISOString(),
+      title: 'Dados Carregados',
+      message: `${metrics.totalTransacoes} transações do relatório de vendas RJ 2025.`,
+      createdAt: new Date().toISOString(),
       priority: 'low',
+    });
+
+    if (hasActiveFilters) {
+      items.push({
+        id: 'a4',
+        type: 'info',
+        title: 'Filtros Ativos',
+        message: 'Os dados exibidos estão filtrados. Limpe os filtros para ver tudo.',
+        createdAt: new Date().toISOString(),
+        priority: 'low',
+      });
+    }
+
+    return items;
+  }, [metrics, hasActiveFilters]);
+
+  const quickStats: QuickStat[] = useMemo(() => [
+    {
+      label: "Ticket Médio",
+      value: formatCurrency(metrics.ticketMedio),
+      description: "por transação",
     },
     {
-      id: '4',
-      type: 'warning',
-      title: 'Leads Quentes',
-      message: '23 leads abriram o link de pagamento nas últimas 24h.',
-      createdAt: new Date(2025, 10, 26, 14, 20).toISOString(),
-      priority: 'medium',
+      label: "Aprovação",
+      value: `${metrics.taxaAprovacao.toFixed(1)}%`,
+      description: "taxa de aprovação",
     },
-  ];
+    {
+      label: "Valor Total",
+      value: `R$ ${formatCompactNumber(metrics.valorTotalVendas)}`,
+      description: "em vendas aprovadas",
+    },
+  ], [metrics]);
 
-  const quickStats: QuickStat[] = [
-    { label: "Ticket Médio", value: "R$ 21.6K", description: "por mentoria" },
-    { label: "Conversão", value: "18.5%", description: "leads → vendas" },
-    { label: "Engajamento", value: "87%", description: "taxa de abertura" },
-  ];
+  // Dados para gráficos
+  const chartData = useMemo(() => {
+    // Vendas por mês para SalesChart
+    const mesesOrdenados = Object.entries(metrics.vendasPorMes)
+      .sort(([a], [b]) => a.localeCompare(b));
+
+    const monthNames: Record<string, string> = {
+      '01': 'Jan', '02': 'Fev', '03': 'Mar', '04': 'Abr',
+      '05': 'Mai', '06': 'Jun', '07': 'Jul', '08': 'Ago',
+      '09': 'Set', '10': 'Out', '11': 'Nov', '12': 'Dez',
+    };
+
+    const salesChartLabels = mesesOrdenados.map(([key]) => {
+      const [, month] = key.split('-');
+      return monthNames[month] || month;
+    });
+    const salesChartValues = mesesOrdenados.map(([, value]) => value);
+
+    // Vendas por dia para LeadsVendasChart, agrupadas por mês com labels legíveis
+    const diasOrdenados = Object.entries(metrics.vendasPorDia)
+      .sort(([a], [b]) => a.localeCompare(b));
+
+    const monthlyMap: Record<string, { transacoes: number; valor: number }> = {};
+    diasOrdenados.forEach(([dateKey, data]) => {
+      const [year, month] = dateKey.split('-');
+      const sortKey = `${year}-${month}`;
+      if (!monthlyMap[sortKey]) monthlyMap[sortKey] = { transacoes: 0, valor: 0 };
+      monthlyMap[sortKey].transacoes += data.quantidade;
+      monthlyMap[sortKey].valor += data.vendas;
+    });
+
+    const monthlyOrdenado = Object.entries(monthlyMap).sort(([a], [b]) => a.localeCompare(b));
+    const leadsChartLabels = monthlyOrdenado.map(([key]) => {
+      const [year, month] = key.split('-');
+      return `${monthNames[month] || month}/${year.slice(2)}`;
+    });
+    const leadsChartTransacoes = monthlyOrdenado.map(([, data]) => data.transacoes);
+    const leadsChartValor = monthlyOrdenado.map(([, data]) => data.valor);
+
+    // Vendas por produto (para possível uso)
+    const produtoLabels = Object.keys(metrics.vendasPorProduto).sort(
+      (a, b) => metrics.vendasPorProduto[b].quantidade - metrics.vendasPorProduto[a].quantidade
+    );
+    const produtoQuantidades = produtoLabels.map((p) => metrics.vendasPorProduto[p].quantidade);
+    const produtoValores = produtoLabels.map((p) => metrics.vendasPorProduto[p].valor);
+
+    return {
+      salesChart: { labels: salesChartLabels, values: salesChartValues },
+      leadsChart: {
+        labels: leadsChartLabels,
+        transacoes: leadsChartTransacoes,
+        valores: leadsChartValor,
+      },
+      produtoChart: {
+        labels: produtoLabels,
+        quantidades: produtoQuantidades,
+        valores: produtoValores,
+      },
+    };
+  }, [metrics]);
 
   return {
     stats,
     sales,
     alerts,
     quickStats,
+    chartData,
+    filters,
+    updateFilter,
+    clearFilters,
+    hasActiveFilters,
+    statusOptions,
+    produtoOptions,
+    quickDatePreset,
+    applyQuickDate,
   };
 }

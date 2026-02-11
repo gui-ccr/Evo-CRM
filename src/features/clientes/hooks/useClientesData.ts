@@ -1,70 +1,131 @@
+import { useMemo, useState } from 'react';
+import { useTransactionData } from '../../../data/useTransactionData';
 import type { Cliente, ClienteStats } from '../types';
 
 export function useClientesData() {
-  const clientes: Cliente[] = [
-    {
-      id: '1',
-      nome: 'João Silva',
-      email: 'joao.silva@email.com',
-      telefone: '(11) 98765-4321',
-      dataCadastro: new Date(2025, 9, 15).toISOString(),
-      status: 'ativo',
-      origem: 'Evento SP - Novembro',
-      valorTotal: 24000,
-      ultimaInteracao: new Date(2025, 10, 20).toISOString(),
-    },
-    {
-      id: '2',
-      nome: 'Maria Santos',
-      email: 'maria.santos@email.com',
-      telefone: '(11) 98765-1234',
-      dataCadastro: new Date(2025, 9, 10).toISOString(),
-      status: 'ativo',
-      origem: 'Indicação',
-      valorTotal: 18000,
-      ultimaInteracao: new Date(2025, 10, 22).toISOString(),
-    },
-    {
-      id: '3',
-      nome: 'Carlos Oliveira',
-      email: 'carlos.oliveira@email.com',
-      telefone: '(21) 98765-5678',
-      dataCadastro: new Date(2025, 8, 25).toISOString(),
-      status: 'pendente',
-      origem: 'Landing Page',
-      valorTotal: 0,
-      ultimaInteracao: new Date(2025, 10, 18).toISOString(),
-    },
-    {
-      id: '4',
-      nome: 'Ana Paula',
-      email: 'ana.paula@email.com',
-      telefone: '(11) 98765-9999',
-      dataCadastro: new Date(2025, 10, 1).toISOString(),
-      status: 'ativo',
-      origem: 'Evento RJ - Outubro',
-      valorTotal: 48000,
-      ultimaInteracao: new Date(2025, 10, 25).toISOString(),
-    },
-    {
-      id: '5',
-      nome: 'Roberto Lima',
-      email: 'roberto.lima@email.com',
-      telefone: '(11) 98765-7777',
-      dataCadastro: new Date(2025, 7, 12).toISOString(),
-      status: 'inativo',
-      origem: 'Instagram',
-      valorTotal: 12000,
-      ultimaInteracao: new Date(2025, 8, 5).toISOString(),
-    },
-  ];
+  const { allTransactions } = useTransactionData();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const stats: ClienteStats = {
-    total: 2847,
-    ativos: 2156,
-    novosEsteMes: 324,
-    conversao: '18.5%',
+  // Agrupa transações por email (chave primária de identificação do cliente)
+  const allClientes: Cliente[] = useMemo(() => {
+    const map = new Map<string, {
+      nome: string;
+      email: string;
+      telefone: string;
+      primeiraCompra: Date;
+      ultimaCompra: Date;
+      totalCompras: number;
+      ltv: number;
+      totalTransacoes: number;
+      temEstorno: boolean;
+      produtos: Set<string>;
+    }>();
+
+    for (const t of allTransactions) {
+      // Chave de agrupamento: email (preferido) ou nome como fallback
+      const key = t.email ? t.email.toLowerCase().trim() : t.comprador.toLowerCase().trim();
+      if (!key) continue;
+
+      const existing = map.get(key);
+      if (existing) {
+        // Atualiza dados existentes
+        if (!existing.nome && t.comprador) existing.nome = t.comprador;
+        if (!existing.telefone && t.telefone) existing.telefone = t.telefone;
+        if (t.dataTransacao < existing.primeiraCompra) existing.primeiraCompra = t.dataTransacao;
+        if (t.dataTransacao > existing.ultimaCompra) existing.ultimaCompra = t.dataTransacao;
+        existing.totalTransacoes += 1;
+        if (t.status === 'APROVADO') {
+          existing.ltv += t.valorCompra;
+          existing.totalCompras += 1;
+        }
+        if (t.status === 'ESTORNADO' || t.status === 'CHARGEBACK') {
+          existing.temEstorno = true;
+        }
+        existing.produtos.add(t.produtoNormalizado);
+      } else {
+        map.set(key, {
+          nome: t.comprador,
+          email: t.email,
+          telefone: t.telefone,
+          primeiraCompra: t.dataTransacao,
+          ultimaCompra: t.dataTransacao,
+          totalCompras: t.status === 'APROVADO' ? 1 : 0,
+          ltv: t.status === 'APROVADO' ? t.valorCompra : 0,
+          totalTransacoes: 1,
+          temEstorno: t.status === 'ESTORNADO' || t.status === 'CHARGEBACK',
+          produtos: new Set([t.produtoNormalizado]),
+        });
+      }
+    }
+
+    let id = 0;
+    const result: Cliente[] = [];
+    for (const [, data] of map) {
+      id++;
+      let status: Cliente['status'];
+      if (data.totalCompras > 0 && !data.temEstorno) {
+        status = 'ativo';
+      } else if (data.temEstorno) {
+        status = 'inativo';
+      } else {
+        status = 'pendente';
+      }
+
+      result.push({
+        id: String(id),
+        nome: data.nome,
+        email: data.email,
+        telefone: data.telefone,
+        dataCadastro: data.primeiraCompra.toISOString(),
+        status,
+        origem: Array.from(data.produtos).slice(0, 2).join(', '),
+        valorTotal: Math.round(data.ltv * 100) / 100,
+        ultimaInteracao: data.ultimaCompra.toISOString(),
+      });
+    }
+
+    // Ordena por LTV decrescente
+    result.sort((a, b) => b.valorTotal - a.valorTotal);
+    return result;
+  }, [allTransactions]);
+
+  // Busca por nome ou email
+  const clientes = useMemo(() => {
+    if (!searchQuery.trim()) return allClientes;
+    const q = searchQuery.toLowerCase().trim();
+    return allClientes.filter(
+      (c) => c.nome.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)
+    );
+  }, [allClientes, searchQuery]);
+
+  // Stats calculadas dos clientes
+  const stats: ClienteStats = useMemo(() => {
+    const now = new Date();
+    const thisMonth = now.getMonth();
+    const thisYear = now.getFullYear();
+
+    const ativos = allClientes.filter((c) => c.status === 'ativo').length;
+    const novosEsteMes = allClientes.filter((c) => {
+      const d = new Date(c.dataCadastro);
+      return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
+    }).length;
+
+    const totalLtv = allClientes.reduce((sum, c) => sum + c.valorTotal, 0);
+    const mediaLtv = allClientes.length > 0 ? totalLtv / allClientes.length : 0;
+
+    return {
+      total: allClientes.length,
+      ativos,
+      novosEsteMes,
+      conversao: `R$ ${mediaLtv.toFixed(0)}`,
+    };
+  }, [allClientes]);
+
+  return {
+    clientes,
+    allClientes,
+    stats,
+    searchQuery,
+    setSearchQuery,
   };
-
-  return { clientes, stats };
 }

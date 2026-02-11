@@ -21,7 +21,7 @@ export type Sale = {
   saleDate: string;
   amount: number;
   status: 'completed' | 'pending' | 'cancelled';
-  paymentMethod: 'cash' | 'financing' | 'leasing';
+  paymentMethod: 'cash' | 'financing' | 'leasing' | 'pix' | 'cartao' | 'maquina';
 };
 
 export type Alert = {

@@ -11,6 +11,7 @@ import {
   Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { formatCurrency } from '../../shared/utils/formatters';
 
 ChartJS.register(
   CategoryScale,
@@ -26,38 +27,32 @@ ChartJS.register(
 interface LeadsVendasChartProps {
   title?: string;
   subtitle?: string;
-}
-
-interface DataPoint {
-  dia: string;
-  leads: number;
-  vendas: number;
+  labels?: string[];
+  transacoes?: number[];
+  valores?: number[];
 }
 
 export function LeadsVendasChart({
-  title = "Leads vs Vendas - Últimos 30 Dias",
-  subtitle = "Acompanhamento diário"
+  title = "Transações vs Comissão - Mensal",
+  subtitle = "Acompanhamento mensal",
+  labels: propLabels,
+  transacoes: propTransacoes,
+  valores: propValores,
 }: LeadsVendasChartProps) {
-  const data: DataPoint[] = [
-    { dia: '01', leads: 45, vendas: 8 },
-    { dia: '05', leads: 52, vendas: 12 },
-    { dia: '10', leads: 38, vendas: 7 },
-    { dia: '15', leads: 65, vendas: 15 },
-    { dia: '20', leads: 58, vendas: 11 },
-    { dia: '25', leads: 72, vendas: 18 },
-    { dia: '30', leads: 68, vendas: 14 },
-  ];
+  const labels = propLabels || ['01', '05', '10', '15', '20', '25', '30'];
+  const transacoesData = propTransacoes || [45, 52, 38, 65, 58, 72, 68];
+  const valoresData = propValores || [8000, 12000, 7000, 15000, 11000, 18000, 14000];
 
-  const totalLeads = data.reduce((sum, d) => sum + d.leads, 0);
-  const totalVendas = data.reduce((sum, d) => sum + d.vendas, 0);
-  const taxaConversao = ((totalVendas / totalLeads) * 100).toFixed(1);
+  const totalTransacoes = transacoesData.reduce((sum, d) => sum + d, 0);
+  const totalValor = valoresData.reduce((sum, d) => sum + d, 0);
+  const mediaTransacoes = transacoesData.length > 0 ? (totalTransacoes / transacoesData.length).toFixed(0) : '0';
 
   const chartData = {
-    labels: data.map(d => `Dia ${d.dia}`),
+    labels,
     datasets: [
       {
-        label: 'Novos Leads',
-        data: data.map(d => d.leads),
+        label: 'Transações',
+        data: transacoesData,
         borderColor: 'rgb(78, 205, 196)',
         backgroundColor: 'rgba(78, 205, 196, 0.1)',
         yAxisID: 'y',
@@ -70,8 +65,8 @@ export function LeadsVendasChart({
         pointBorderWidth: 2,
       },
       {
-        label: 'Vendas Concluídas',
-        data: data.map(d => d.vendas),
+        label: 'Comissão (R$)',
+        data: valoresData,
         borderColor: 'rgb(99, 102, 241)',
         backgroundColor: 'rgba(99, 102, 241, 0.1)',
         yAxisID: 'y1',
@@ -125,6 +120,9 @@ export function LeadsVendasChart({
           label: function(context: any) {
             const label = context.dataset.label || '';
             const value = context.parsed.y;
+            if (label.includes('Comissão')) {
+              return `${label}: ${formatCurrency(value)}`;
+            }
             return `${label}: ${value}`;
           }
         }
@@ -149,7 +147,7 @@ export function LeadsVendasChart({
         position: 'left' as const,
         title: {
           display: true,
-          text: 'Leads',
+          text: 'Transações',
           font: {
             size: 12,
             family: 'DM Sans',
@@ -174,7 +172,7 @@ export function LeadsVendasChart({
         position: 'right' as const,
         title: {
           display: true,
-          text: 'Vendas',
+          text: 'Comissão (R$)',
           font: {
             size: 12,
             family: 'DM Sans',
@@ -191,6 +189,9 @@ export function LeadsVendasChart({
             family: 'DM Sans',
           },
           color: '#64748b',
+          callback: function(value: any) {
+            return `R$ ${(value / 1000).toFixed(0)}K`;
+          }
         },
       },
     },
@@ -205,7 +206,7 @@ export function LeadsVendasChart({
         </div>
         <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
           <TrendingUp size={18} className="sm:w-5 sm:h-5" />
-          <span className="text-xs sm:text-sm font-medium">Taxa de Conversão: {taxaConversao}%</span>
+          <span className="text-xs sm:text-sm font-medium">Média: {mediaTransacoes} tx/semana</span>
         </div>
       </div>
 
@@ -216,13 +217,13 @@ export function LeadsVendasChart({
       <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-4 border-t border-zinc-600">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-evo-cyan"></div>
-          <span className="text-xs sm:text-sm text-zinc-600">Total de Leads</span>
-          <span className="text-sm sm:text-base font-bold text-indigo-500">{totalLeads}</span>
+          <span className="text-xs sm:text-sm text-zinc-600">Total Transações</span>
+          <span className="text-sm sm:text-base font-bold text-indigo-500">{totalTransacoes}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-indigo-500"></div>
-          <span className="text-xs sm:text-sm text-zinc-600">Total de Vendas</span>
-          <span className="text-sm sm:text-base font-bold text-indigo-500">{totalVendas}</span>
+          <span className="text-xs sm:text-sm text-zinc-600">Total Comissão</span>
+          <span className="text-sm sm:text-base font-bold text-indigo-500">{formatCurrency(totalValor)}</span>
         </div>
       </div>
     </div>
