@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { X, Send, Calendar, Users, MessageCircle, Mail } from 'lucide-react';
+import { X, Send, Calendar, Users, MessageCircle, Mail, Filter } from 'lucide-react';
 import type { Template, TemplateType } from '../types';
+import type { LeadOrigem, LeadStatus, LeadTemperatura } from '../../crm-intelligence/types';
 
 interface DisparoAgendadorProps {
   isOpen: boolean;
@@ -10,6 +11,9 @@ interface DisparoAgendadorProps {
     templateId: string;
     tipo: TemplateType;
     destinatarios: 'todos' | 'filtro';
+    eventoFiltro?: LeadOrigem;
+    statusFiltro?: LeadStatus[];
+    temperaturaFiltro?: LeadTemperatura[];
     dataAgendamento: string;
     horaAgendamento: string;
     envioImediato: boolean;
@@ -19,9 +23,36 @@ interface DisparoAgendadorProps {
 export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: DisparoAgendadorProps) {
   const [templateId, setTemplateId] = useState('');
   const [destinatarios, setDestinatarios] = useState<'todos' | 'filtro'>('todos');
+  const [eventoFiltro, setEventoFiltro] = useState<LeadOrigem | ''>('');
+  const [statusFiltro, setStatusFiltro] = useState<LeadStatus[]>([]);
+  const [temperaturaFiltro, setTemperaturaFiltro] = useState<LeadTemperatura[]>([]);
   const [dataAgendamento, setDataAgendamento] = useState('');
   const [horaAgendamento, setHoraAgendamento] = useState('');
   const [envioImediato, setEnvioImediato] = useState(false);
+
+  const eventos: LeadOrigem[] = [
+    'Evento SP - Novembro',
+    'Evento RJ - Outubro',
+    'Landing Page',
+    'Instagram',
+    'Indicação',
+    'Lançamento Digital'
+  ];
+
+  const statusOptions: { value: LeadStatus; label: string }[] = [
+    { value: 'novo', label: 'Novo' },
+    { value: 'contatado', label: 'Contatado' },
+    { value: 'interessado', label: 'Interessado' },
+    { value: 'negociacao', label: 'Negociação' },
+    { value: 'convertido', label: 'Convertido' },
+    { value: 'perdido', label: 'Perdido' }
+  ];
+
+  const temperaturaOptions: { value: LeadTemperatura; label: string }[] = [
+    { value: 'quente', label: 'Quente 🔥' },
+    { value: 'morno', label: 'Morno 🌤️' },
+    { value: 'frio', label: 'Frio ❄️' }
+  ];
 
   if (!isOpen) return null;
 
@@ -32,6 +63,9 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
       templateId,
       tipo: templateSelecionado?.tipo || 'whatsapp',
       destinatarios,
+      eventoFiltro: destinatarios === 'filtro' && eventoFiltro ? (eventoFiltro as LeadOrigem) : undefined,
+      statusFiltro: destinatarios === 'filtro' && statusFiltro.length > 0 ? statusFiltro : undefined,
+      temperaturaFiltro: destinatarios === 'filtro' && temperaturaFiltro.length > 0 ? temperaturaFiltro : undefined,
       dataAgendamento,
       horaAgendamento,
       envioImediato,
@@ -39,10 +73,29 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
 
     setTemplateId('');
     setDestinatarios('todos');
+    setEventoFiltro('');
+    setStatusFiltro([]);
+    setTemperaturaFiltro([]);
     setDataAgendamento('');
     setHoraAgendamento('');
     setEnvioImediato(false);
     onClose();
+  };
+
+  const handleStatusChange = (status: LeadStatus) => {
+    setStatusFiltro(prev =>
+      prev.includes(status)
+        ? prev.filter(s => s !== status)
+        : [...prev, status]
+    );
+  };
+
+  const handleTemperaturaChange = (temperatura: LeadTemperatura) => {
+    setTemperaturaFiltro(prev =>
+      prev.includes(temperatura)
+        ? prev.filter(t => t !== temperatura)
+        : [...prev, temperatura]
+    );
   };
 
   const templatesWhatsApp = templates.filter(t => t.tipo === 'whatsapp');
@@ -147,12 +200,76 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                   onChange={(e) => setDestinatarios(e.target.value as 'filtro')}
                   className="w-4 h-4 text-evo-orange"
                 />
-                <Users size={20} className="text-evo-orange" />
+                <Filter size={20} className="text-evo-orange" />
                 <div className="flex-1">
                   <p className="font-medium text-indigo-500">Leads Filtrados</p>
-                  <p className="text-xs text-zinc-600">Apenas leads do último evento (284 leads)</p>
+                  <p className="text-xs text-zinc-600">Filtre por evento, status e temperatura</p>
                 </div>
               </label>
+
+              {destinatarios === 'filtro' && (
+                <div className="ml-12 p-4 bg-evo-cyan-50 border border-zinc-600 rounded-lg space-y-4">
+                  <p className="text-xs text-zinc-600 italic">
+                    Selecione pelo menos um filtro abaixo
+                  </p>
+
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                      Evento/Origem (opcional)
+                    </label>
+                    <select
+                      value={eventoFiltro}
+                      onChange={(e) => setEventoFiltro(e.target.value as LeadOrigem)}
+                      className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
+                    >
+                      <option value="">Todos os eventos</option>
+                      {eventos.map(evento => (
+                        <option key={evento} value={evento}>
+                          {evento}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                      Status do Lead (múltipla escolha)
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {statusOptions.map(({ value, label }) => (
+                        <label key={value} className="flex items-center gap-2 p-2 border border-zinc-600 rounded cursor-pointer hover:border-evo-orange transition-colors">
+                          <input
+                            type="checkbox"
+                            checked={statusFiltro.includes(value)}
+                            onChange={() => handleStatusChange(value)}
+                            className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
+                          />
+                          <span className="text-sm text-indigo-500">{label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                      Temperatura do Lead (múltipla escolha)
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {temperaturaOptions.map(({ value, label }) => (
+                        <label key={value} className="flex items-center gap-2 p-2 px-4 border border-zinc-600 rounded cursor-pointer hover:border-evo-orange transition-colors">
+                          <input
+                            type="checkbox"
+                            checked={temperaturaFiltro.includes(value)}
+                            onChange={() => handleTemperaturaChange(value)}
+                            className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
+                          />
+                          <span className="text-sm text-indigo-500">{label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -201,11 +318,23 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
           </div>
 
           {templateId && (envioImediato || (dataAgendamento && horaAgendamento)) && (
-            <div className="p-4 bg-evo-orange/10 border border-evo-orange/20 rounded-lg">
+            <div className="p-4 bg-evo-orange/10 border border-evo-orange/20 rounded-lg space-y-2">
               <p className="text-sm text-evo-orange">
-                <strong>Resumo:</strong> {destinatarios === 'todos' ? '2.847' : '284'} mensagens serão{' '}
-                {envioImediato ? 'enviadas imediatamente' : `agendadas para ${dataAgendamento} às ${horaAgendamento}`}
+                <strong>Resumo:</strong> {destinatarios === 'todos' ? '2.847' : '284'} mensagens{' '}
+                serão {envioImediato ? 'enviadas imediatamente' : `agendadas para ${dataAgendamento} às ${horaAgendamento}`}
               </p>
+              {destinatarios === 'filtro' && (eventoFiltro || statusFiltro.length > 0 || temperaturaFiltro.length > 0) && (
+                <div className="text-xs text-evo-orange/80 space-y-1">
+                  <p className="font-semibold">Filtros aplicados:</p>
+                  {eventoFiltro && <p>• Evento/Origem: <strong>{eventoFiltro}</strong></p>}
+                  {statusFiltro.length > 0 && (
+                    <p>• Status: <strong>{statusFiltro.map(s => statusOptions.find(opt => opt.value === s)?.label).join(', ')}</strong></p>
+                  )}
+                  {temperaturaFiltro.length > 0 && (
+                    <p>• Temperatura: <strong>{temperaturaFiltro.map(t => temperaturaOptions.find(opt => opt.value === t)?.label).join(', ')}</strong></p>
+                  )}
+                </div>
+              )}
             </div>
           )}
 
@@ -218,7 +347,11 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
             </button>
             <button
               onClick={handleAgendar}
-              disabled={!templateId || (!envioImediato && (!dataAgendamento || !horaAgendamento))}
+              disabled={
+                !templateId ||
+                (!envioImediato && (!dataAgendamento || !horaAgendamento)) ||
+                (destinatarios === 'filtro' && !eventoFiltro && statusFiltro.length === 0 && temperaturaFiltro.length === 0)
+              }
               className="flex-1 px-6 py-3 bg-evo-orange text-black rounded-lg hover:bg-evo-coral transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <Send size={20} />
