@@ -6,7 +6,7 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-export const layoutTheme = {
+export const lightTheme = {
 
   // ─── PÁGINAS ─────────────────────────────────────────────────
   // ⚠️  pageBackground DEVE ser igual a connectorColor e activeItemBackground
@@ -32,3 +32,35 @@ export const layoutTheme = {
   cardTitleColor: "#111827", // gray-900
 
 } as const;
+
+export const darkTheme = {
+
+  // ─── PÁGINAS ─────────────────────────────────────────────────
+  // ⚠️  pageBackground DEVE ser igual a connectorColor e activeItemBackground
+
+  pageBackground:   "#18181B", // zinc-900
+  pageTitleColor:   "#F4F4F5", // zinc-100
+  pageSubtitleColor:"#A1A1AA", // zinc-400
+
+
+  // ─── SIDEBAR ─────────────────────────────────────────────────
+
+  sidebarBackground:    "#27272A", // zinc-800
+  connectorColor:       "#18181B", // ⚠️  = pageBackground
+  activeItemBackground: "#18181B", // ⚠️  = pageBackground
+  activeItemColor:      "#818CF8", // indigo-400
+
+
+  // ─── CARDS ───────────────────────────────────────────────────
+
+  cardBackground: "#27272A", // zinc-800
+  cardBorder:     "#3F3F46", // zinc-700
+  cardTitleColor: "#F4F4F5", // zinc-100
+
+} as const;
+
+/** Tipo que descreve o shape de um tema */
+export type ThemeTokens = typeof lightTheme;
+
+/** Alias mantido para retrocompatibilidade — use useLayoutTheme() em componentes */
+export const layoutTheme = lightTheme;

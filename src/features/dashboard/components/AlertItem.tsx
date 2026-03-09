@@ -1,8 +1,9 @@
 import { AlertCircle, Info, CheckCircle, XCircle } from 'lucide-react';
 import { getRelativeTime } from '../../shared/utils/formatters';
+import { useTheme } from '../../shared/layout/ThemeContext';
 import type { Alert } from '../../shared/types';
 
-const alertConfig = {
+const alertConfigLight = {
   warning: {
     icon: AlertCircle,
     bgColor: 'bg-amber-50',
@@ -15,7 +16,7 @@ const alertConfig = {
     bgColor: 'bg-blue-50',
     textColor: 'text-blue-900',
     borderColor: 'border-blue-300',
-    iconColor: 'text-blue-600',
+    iconColor: 'text-blue-500',
   },
   success: {
     icon: CheckCircle,
@@ -33,11 +34,44 @@ const alertConfig = {
   },
 };
 
+const alertConfigDark = {
+  warning: {
+    icon: AlertCircle,
+    bgColor: 'bg-amber-950/40',
+    textColor: 'text-amber-300',
+    borderColor: 'border-amber-700',
+    iconColor: 'text-amber-400',
+  },
+  info: {
+    icon: Info,
+    bgColor: 'bg-blue-950/40',
+    textColor: 'text-blue-300',
+    borderColor: 'border-blue-700',
+    iconColor: 'text-blue-400',
+  },
+  success: {
+    icon: CheckCircle,
+    bgColor: 'bg-emerald-950/40',
+    textColor: 'text-emerald-300',
+    borderColor: 'border-emerald-700',
+    iconColor: 'text-emerald-400',
+  },
+  error: {
+    icon: XCircle,
+    bgColor: 'bg-red-950/40',
+    textColor: 'text-red-300',
+    borderColor: 'border-red-700',
+    iconColor: 'text-red-400',
+  },
+};
+
 interface AlertItemProps {
   alert: Alert;
 }
 
 export function AlertItem({ alert }: AlertItemProps) {
+  const { isDark } = useTheme();
+  const alertConfig = isDark ? alertConfigDark : alertConfigLight;
   const config = alertConfig[alert.type];
   const Icon = config.icon;
 

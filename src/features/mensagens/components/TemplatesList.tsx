@@ -32,7 +32,7 @@ export function TemplatesList({ templates }: TemplatesListProps) {
                 {template.tipo === 'whatsapp' ? 'WhatsApp' : 'E-mail'}
               </span>
             </div>
-            <button className="p-2 hover:bg-indigo-50 rounded-lg transition-colors touch-manipulation shrink-0">
+            <button className="p-2 hover:bg-indigo-50 rounded-lg transition-colors touch-manipulation shrink-0 cursor-pointer">
               <Edit2 size={16} className="text-gray-500" />
             </button>
           </div>

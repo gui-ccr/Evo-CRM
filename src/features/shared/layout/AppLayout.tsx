@@ -3,13 +3,14 @@ import { Outlet } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { MobileSidebar } from "./MobileSidebar";
-import { layoutTheme } from "./layoutTheme";
+import { ThemeProvider, useLayoutTheme } from "./ThemeContext";
 
-export function AppLayout() {
+function AppLayoutInner() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const theme = useLayoutTheme();
 
   return (
-    <div className="flex h-screen w-full font-sans" style={{ backgroundColor: layoutTheme.pageBackground }}>
+    <div className="flex h-screen w-full font-sans" style={{ backgroundColor: theme.pageBackground }}>
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -20,21 +21,33 @@ export function AppLayout() {
       />
 
       <div className="flex-1 flex flex-col overflow-hidden w-full">
-        <header className="lg:hidden bg-white border-b border-border p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-card">
-          <span className="text-content-primary font-bold text-base sm:text-lg">EVO Coaching</span>
+        <header
+          className="lg:hidden border-b border-border p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 shadow-card"
+          style={{ backgroundColor: theme.sidebarBackground }}
+        >
+          <span className="text-content-primary font-bold text-base sm:text-lg" style={{ color: theme.pageTitleColor }}>EVO Coaching</span>
           <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="p-2 hover:bg-surface-muted rounded-lg transition-colors touch-manipulation cursor-pointer"
+            className="p-2 rounded-lg transition-colors touch-manipulation cursor-pointer"
+            style={{ color: theme.pageTitleColor }}
             aria-label="Abrir menu"
           >
-            <Menu size={24} className="text-content-secondary" />
+            <Menu size={24} />
           </button>
         </header>
 
-        <main className="flex-1 overflow-auto w-full" style={{ backgroundColor: layoutTheme.pageBackground }}>
+        <main className="flex-1 overflow-auto w-full" style={{ backgroundColor: theme.pageBackground }}>
           <Outlet />
         </main>
       </div>
     </div>
+  );
+}
+
+export function AppLayout() {
+  return (
+    <ThemeProvider>
+      <AppLayoutInner />
+    </ThemeProvider>
   );
 }

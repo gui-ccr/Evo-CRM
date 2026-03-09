@@ -74,7 +74,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
               type="text"
               value={formData.nome || ''}
               onChange={(e) => handleChange('nome', e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+              className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
               required
             />
           </div>
@@ -89,7 +89,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
                 type="email"
                 value={formData.email || ''}
                 onChange={(e) => handleChange('email', e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
                 required
               />
             </div>
@@ -101,7 +101,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
                 type="tel"
                 value={formData.telefone || ''}
                 onChange={(e) => handleChange('telefone', e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
                 required
               />
             </div>
@@ -116,7 +116,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
               <select
                 value={formData.origem || 'Website'}
                 onChange={(e) => handleChange('origem', e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
               >
                 <option value="Website">Website</option>
                 <option value="Indicação">Indicação</option>
@@ -133,7 +133,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
               <select
                 value={formData.status || 'lead'}
                 onChange={(e) => handleChange('status', e.target.value as Cliente['status'])}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+                className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
               >
                 <option value="ativo">Ativo</option>
                 <option value="inativo">Inativo</option>
@@ -152,7 +152,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
               step="0.01"
               value={formData.valorTotal || 0}
               onChange={(e) => handleChange('valorTotal', parseFloat(e.target.value) || 0)}
-              className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors"
+              className="w-full px-4 py-2.5 rounded-lg border border-zinc-600 focus:border-indigo-500 focus:outline-none text-zinc-800 transition-colors cursor-pointer"
               required
             />
           </div>
@@ -162,7 +162,7 @@ export function ClienteModal({ isOpen, onClose, cliente, onSave, mode }: Cliente
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2.5 rounded-lg border-2 border-zinc-300 text-zinc-700 font-semibold hover:bg-zinc-100 transition-colors touch-manipulation cursor-pointer w-full sm:w-auto"
+              className="px-6 py-2.5 rounded-lg border-2 border-red-300 text-red-600 font-semibold hover:bg-red-50 transition-colors touch-manipulation cursor-pointer w-full sm:w-auto"
             >
               Cancelar
             </button>

@@ -14,8 +14,8 @@ export function CrmIntelligence() {
       <FiltrosInteligentes filtros={filtros} onFiltrosChange={setFiltros} />
 
       <Card title={`Leads Priorizados (${leads.length})`}>
-        <div className="mb-4 p-3 bg-evo-orange/10 border border-evo-orange/20 rounded-lg">
-          <p className="text-sm text-evo-orange">
+        <div className="mb-4 p-3 bg-indigo-50 border border-indigo-200 rounded-lg">
+          <p className="text-sm text-indigo-600">
             <strong>Lead Scoring:</strong> Leads ordenados por prioridade. Quanto maior o score, mais engajado está o lead.
           </p>
         </div>

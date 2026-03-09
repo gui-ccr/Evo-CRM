@@ -1,5 +1,5 @@
 import { Target } from 'lucide-react';
-import { layoutTheme } from "../../shared/layout/layoutTheme";
+import { useLayoutTheme } from "../../shared/layout/ThemeContext";
 
 interface CrmHeaderProps {
   totalLeads: number;
@@ -7,14 +7,15 @@ interface CrmHeaderProps {
 }
 
 export function CrmHeader({ totalLeads, leadsQuentes }: CrmHeaderProps) {
+  const theme = useLayoutTheme();
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 flex items-center gap-2 sm:gap-3" style={{ color: layoutTheme.pageTitleColor }}>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 flex items-center gap-2 sm:gap-3" style={{ color: theme.pageTitleColor }}>
           <Target className="text-indigo-500 flex-shrink-0" size={24} />
           <span>CRM Intelligence</span>
         </h1>
-        <p className="text-sm sm:text-base" style={{ color: layoutTheme.pageSubtitleColor }}>
+        <p className="text-sm sm:text-base" style={{ color: theme.pageSubtitleColor }}>
           Funil de vendas com lead scoring e filtros inteligentes
         </p>
       </div>

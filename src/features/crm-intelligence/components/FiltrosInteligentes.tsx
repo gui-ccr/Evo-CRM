@@ -67,7 +67,7 @@ export function FiltrosInteligentes({ filtros, onFiltrosChange }: FiltrosIntelig
         {temFiltrosAtivos && (
           <button
             onClick={limparFiltros}
-            className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 hover:text-red-600 transition-colors touch-manipulation"
+            className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 hover:text-red-600 transition-colors touch-manipulation cursor-pointer"
           >
             <X size={14} className="sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Limpar Filtros</span>
@@ -86,7 +86,7 @@ export function FiltrosInteligentes({ filtros, onFiltrosChange }: FiltrosIntelig
               <button
                 key={origem}
                 onClick={() => toggleOrigem(origem)}
-                className={`px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-lg border-2 transition-colors touch-manipulation ${
+                className={`px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-lg border-2 transition-colors touch-manipulation cursor-pointer ${
                   filtros.origem?.includes(origem)
                     ? 'bg-indigo-600 text-white border-indigo-600'
                     : 'bg-white text-gray-700 border-gray-300 hover:border-indigo-400 hover:text-indigo-600'
@@ -128,7 +128,7 @@ export function FiltrosInteligentes({ filtros, onFiltrosChange }: FiltrosIntelig
               <button
                 key={temp}
                 onClick={() => toggleTemperatura(temp)}
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-lg border-2 capitalize transition-colors touch-manipulation flex-1 sm:flex-initial ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-lg border-2 capitalize transition-colors touch-manipulation flex-1 sm:flex-initial cursor-pointer ${
                   filtros.temperatura?.includes(temp)
                     ? temp === 'quente'
                       ? 'bg-red-600 text-white border-red-600'

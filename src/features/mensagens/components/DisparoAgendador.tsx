@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Send, Calendar, Users, MessageCircle, Mail, Filter } from 'lucide-react';
 import type { Template, TemplateType } from '../types';
 import type { LeadOrigem, LeadStatus, LeadTemperatura } from '../../crm-intelligence/types';
+import { useLayoutTheme } from '../../shared/layout/ThemeContext';
 
 interface DisparoAgendadorProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
   const [dataAgendamento, setDataAgendamento] = useState('');
   const [horaAgendamento, setHoraAgendamento] = useState('');
   const [envioImediato, setEnvioImediato] = useState(false);
+  const theme = useLayoutTheme();
 
   const eventos: LeadOrigem[] = [
     'Evento SP - Novembro',
@@ -103,29 +105,30 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-zinc-200 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-zinc-200 border-b-2 border-zinc-600 p-6 flex items-center justify-between">
+      <div className="rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style={{ backgroundColor: theme.cardBackground, border: `1px solid ${theme.cardBorder}` }}>
+        <div className="sticky top-0 border-b-2 p-6 flex items-center justify-between" style={{ backgroundColor: theme.cardBackground, borderColor: theme.cardBorder }}>
           <div className="flex items-center gap-3">
-            <Send className="text-evo-orange" size={28} />
+            <Send className="text-indigo-500" size={28} />
             <h2 className="text-2xl font-bold text-indigo-500">Agendar Disparo</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-evo-cyan-50 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            style={{ color: theme.cardTitleColor }}
           >
-            <X size={24} className="text-zinc-600" />
+            <X size={24} />
           </button>
         </div>
 
         <div className="p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-zinc-600 mb-2">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
               Selecione o Template
             </label>
             <select
               value={templateId}
               onChange={(e) => setTemplateId(e.target.value)}
-              className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none text-gray-700 cursor-pointer"
             >
               <option value="">Escolha um template...</option>
               {templatesWhatsApp.length > 0 && (
@@ -150,77 +153,77 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
           </div>
 
           {templateSelecionado && (
-            <div className="p-4 bg-evo-cyan-50 border border-zinc-600 rounded-lg">
+            <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-2 mb-2">
                 {templateSelecionado.tipo === 'whatsapp' ? (
-                  <MessageCircle size={16} className="text-green-500" />
+                  <MessageCircle size={16} className="text-emerald-600" />
                 ) : (
-                  <Mail size={16} className="text-blue-500" />
+                  <Mail size={16} className="text-blue-600" />
                 )}
                 <p className="text-sm font-medium text-indigo-500">
                   Preview do Template
                 </p>
               </div>
               {templateSelecionado.assunto && (
-                <p className="text-xs text-zinc-600 mb-1">
+                <p className="text-xs text-gray-600 mb-1">
                   <strong>Assunto:</strong> {templateSelecionado.assunto}
                 </p>
               )}
-              <p className="text-sm text-zinc-2000">{templateSelecionado.mensagem}</p>
+              <p className="text-sm text-gray-700">{templateSelecionado.mensagem}</p>
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-zinc-600 mb-3">
+            <label className="block text-sm font-medium text-gray-600 mb-3">
               Destinatários
             </label>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 p-4 border border-zinc-600 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
+              <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-400 transition-colors">
                 <input
                   type="radio"
                   name="destinatarios"
                   value="todos"
                   checked={destinatarios === 'todos'}
                   onChange={(e) => setDestinatarios(e.target.value as 'todos')}
-                  className="w-4 h-4 text-evo-orange"
+                  className="w-4 h-4 text-indigo-600"
                 />
-                <Users size={20} className="text-evo-orange" />
+                <Users size={20} className="text-indigo-500" />
                 <div className="flex-1">
                   <p className="font-medium text-indigo-500">Todos os Leads</p>
-                  <p className="text-xs text-zinc-600">Enviar para toda a base (2.847 leads)</p>
+                  <p className="text-xs text-gray-500">Enviar para toda a base (2.847 leads)</p>
                 </div>
               </label>
 
-              <label className="flex items-center gap-3 p-4 border border-zinc-600 rounded-lg cursor-pointer hover:border-evo-orange transition-colors">
+              <label className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-indigo-400 transition-colors">
                 <input
                   type="radio"
                   name="destinatarios"
                   value="filtro"
                   checked={destinatarios === 'filtro'}
                   onChange={(e) => setDestinatarios(e.target.value as 'filtro')}
-                  className="w-4 h-4 text-evo-orange"
+                  className="w-4 h-4 text-indigo-600"
                 />
-                <Filter size={20} className="text-evo-orange" />
+                <Filter size={20} className="text-indigo-500" />
                 <div className="flex-1">
                   <p className="font-medium text-indigo-500">Leads Filtrados</p>
-                  <p className="text-xs text-zinc-600">Filtre por evento, status e temperatura</p>
+                  <p className="text-xs text-gray-500">Filtre por evento, status e temperatura</p>
                 </div>
               </label>
 
               {destinatarios === 'filtro' && (
-                <div className="ml-12 p-4 bg-evo-cyan-50 border border-zinc-600 rounded-lg space-y-4">
-                  <p className="text-xs text-zinc-600 italic">
+                <div className="ml-12 p-4 bg-gray-50 border border-gray-200 rounded-lg space-y-4">
+                  <p className="text-xs text-gray-500 italic">
                     Selecione pelo menos um filtro abaixo
                   </p>
 
                   <div>
-                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
                       Evento/Origem (opcional)
                     </label>
                     <select
                       value={eventoFiltro}
                       onChange={(e) => setEventoFiltro(e.target.value as LeadOrigem)}
-                      className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
+                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none text-gray-700 cursor-pointer"
                     >
                       <option value="">Todos os eventos</option>
                       {eventos.map(evento => (
@@ -232,38 +235,38 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
                       Status do Lead (múltipla escolha)
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       {statusOptions.map(({ value, label }) => (
-                        <label key={value} className="flex items-center gap-2 p-2 border border-zinc-600 rounded cursor-pointer hover:border-evo-orange transition-colors">
+                        <label key={value} className="flex items-center gap-2 p-2 border border-gray-200 rounded cursor-pointer hover:border-indigo-400 transition-colors">
                           <input
                             type="checkbox"
                             checked={statusFiltro.includes(value)}
                             onChange={() => handleStatusChange(value)}
-                            className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
+                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                           />
-                          <span className="text-sm text-indigo-500">{label}</span>
+                          <span className="text-sm text-gray-700">{label}</span>
                         </label>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-zinc-600 mb-2">
+                    <label className="block text-sm font-medium text-gray-600 mb-2">
                       Temperatura do Lead (múltipla escolha)
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {temperaturaOptions.map(({ value, label }) => (
-                        <label key={value} className="flex items-center gap-2 p-2 px-4 border border-zinc-600 rounded cursor-pointer hover:border-evo-orange transition-colors">
+                        <label key={value} className="flex items-center gap-2 p-2 px-4 border border-gray-200 rounded cursor-pointer hover:border-indigo-400 transition-colors">
                           <input
                             type="checkbox"
                             checked={temperaturaFiltro.includes(value)}
                             onChange={() => handleTemperaturaChange(value)}
-                            className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
+                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                           />
-                          <span className="text-sm text-indigo-500">{label}</span>
+                          <span className="text-sm text-gray-700">{label}</span>
                         </label>
                       ))}
                     </div>
@@ -279,7 +282,7 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                 type="checkbox"
                 checked={envioImediato}
                 onChange={(e) => setEnvioImediato(e.target.checked)}
-                className="w-4 h-4 text-evo-orange border-zinc-600 rounded focus:ring-evo-orange"
+                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
               />
               <span className="text-sm font-medium text-indigo-500">
                 Enviar imediatamente após confirmar
@@ -289,7 +292,7 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
             {!envioImediato && (
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-600 mb-2">
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
                     <Calendar size={16} className="inline mr-1" />
                     Data
                   </label>
@@ -298,19 +301,19 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                     value={dataAgendamento}
                     onChange={(e) => setDataAgendamento(e.target.value)}
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
+                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none text-gray-700"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-zinc-600 mb-2">
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
                     Horário
                   </label>
                   <input
                     type="time"
                     value={horaAgendamento}
                     onChange={(e) => setHoraAgendamento(e.target.value)}
-                    className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:border-evo-orange focus:outline-none"
+                    className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none text-gray-700"
                   />
                 </div>
               </div>
@@ -318,13 +321,13 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
           </div>
 
           {templateId && (envioImediato || (dataAgendamento && horaAgendamento)) && (
-            <div className="p-4 bg-evo-orange/10 border border-evo-orange/20 rounded-lg space-y-2">
-              <p className="text-sm text-evo-orange">
+            <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-lg space-y-2">
+              <p className="text-sm text-indigo-700">
                 <strong>Resumo:</strong> {destinatarios === 'todos' ? '2.847' : '284'} mensagens{' '}
                 serão {envioImediato ? 'enviadas imediatamente' : `agendadas para ${dataAgendamento} às ${horaAgendamento}`}
               </p>
               {destinatarios === 'filtro' && (eventoFiltro || statusFiltro.length > 0 || temperaturaFiltro.length > 0) && (
-                <div className="text-xs text-evo-orange/80 space-y-1">
+                <div className="text-xs text-indigo-600 space-y-1">
                   <p className="font-semibold">Filtros aplicados:</p>
                   {eventoFiltro && <p>• Evento/Origem: <strong>{eventoFiltro}</strong></p>}
                   {statusFiltro.length > 0 && (
@@ -338,10 +341,10 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
             </div>
           )}
 
-          <div className="flex gap-3 pt-4 border-t-2 border-zinc-600">
+          <div className="flex gap-3 pt-4 border-t-2 border-gray-200">
             <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-zinc-600 text-indigo-500 rounded-lg hover:border-indigo-500 transition-colors font-semibold"
+              className="flex-1 px-6 py-3 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors font-semibold cursor-pointer"
             >
               Cancelar
             </button>
@@ -352,7 +355,7 @@ export function DisparoAgendador({ isOpen, onClose, templates, onAgendar }: Disp
                 (!envioImediato && (!dataAgendamento || !horaAgendamento)) ||
                 (destinatarios === 'filtro' && !eventoFiltro && statusFiltro.length === 0 && temperaturaFiltro.length === 0)
               }
-              className="flex-1 px-6 py-3 bg-evo-orange text-black rounded-lg hover:bg-evo-coral transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
             >
               <Send size={20} />
               {envioImediato ? 'Enviar Agora' : 'Agendar Disparo'}

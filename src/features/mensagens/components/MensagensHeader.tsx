@@ -1,18 +1,19 @@
 import { Send } from 'lucide-react';
-import { layoutTheme } from "../../shared/layout/layoutTheme";
+import { useLayoutTheme } from "../../shared/layout/ThemeContext";
 
 interface MensagensHeaderProps {
   onNewDisparo: () => void;
 }
 
 export function MensagensHeader({ onNewDisparo }: MensagensHeaderProps) {
+  const theme = useLayoutTheme();
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="flex-1 min-w-0">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2" style={{ color: layoutTheme.pageTitleColor }}>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2" style={{ color: theme.pageTitleColor }}>
           Disparo de Mensagens
         </h1>
-        <p className="text-sm sm:text-base" style={{ color: layoutTheme.pageSubtitleColor }}>
+        <p className="text-sm sm:text-base" style={{ color: theme.pageSubtitleColor }}>
           Gerencie templates e automatize disparos de WhatsApp e E-mail
         </p>
       </div>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { X } from "lucide-react";
+import { X, Moon, Sun } from "lucide-react";
 import {
   LayoutDashboardIcon,
   UsersIcon,
@@ -10,7 +10,7 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import gsap from "gsap";
-import { layoutTheme } from "./layoutTheme";
+import { useLayoutTheme, useTheme } from "./ThemeContext";
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -21,6 +21,8 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
   const location = useLocation();
   const backdropRef = useRef<HTMLDivElement>(null);
   const asideRef = useRef<HTMLElement>(null);
+  const theme = useLayoutTheme();
+  const { isDark, toggleTheme } = useTheme();
 
   const menus = [
     { name: "Dashboard", icon: LayoutDashboardIcon, path: "/dashboard" },
@@ -37,7 +39,6 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
     if (!backdrop || !aside) return;
 
     if (isOpen) {
-      // Garante estado inicial antes de animar
       gsap.set(aside, { x: "-100%" });
       gsap.set(backdrop, { opacity: 0, pointerEvents: "auto" });
 
@@ -66,27 +67,31 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
       {/* Sidebar */}
       <aside
         ref={asideRef}
-        className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] border-r border-border z-50 lg:hidden overflow-y-auto"
+        className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] border-r border-border z-50 lg:hidden overflow-y-auto flex flex-col"
         style={{
-          backgroundColor: layoutTheme.sidebarBackground,
+          backgroundColor: theme.sidebarBackground,
           transform: "translateX(-100%)",
         }}
       >
         <div
-          className="flex items-center justify-between p-4 border-b border-border sticky top-0 z-10"
-          style={{ backgroundColor: layoutTheme.sidebarBackground }}
+          className="flex items-center justify-between p-4 border-b sticky top-0 z-10"
+          style={{
+            backgroundColor: theme.sidebarBackground,
+            borderColor: isDark ? "#3F3F46" : "#E5E7EB",
+          }}
         >
-          <span className="text-content-primary font-bold text-lg sm:text-xl">EVO Coaching</span>
+          <span className="font-bold text-lg sm:text-xl" style={{ color: theme.pageTitleColor }}>EVO Coaching</span>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-surface-muted rounded-lg transition-colors touch-manipulation cursor-pointer"
+            className="p-2 rounded-lg transition-colors touch-manipulation cursor-pointer"
+            style={{ color: isDark ? "#A1A1AA" : "#6B7280" }}
             aria-label="Fechar menu"
           >
-            <X size={24} className="text-content-secondary" />
+            <X size={24} />
           </button>
         </div>
 
-        <nav className="py-2">
+        <nav className="py-2 flex-1">
           {menus.map((item) => {
             const isActive = location.pathname.startsWith(item.path);
             return (
@@ -95,15 +100,13 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                 to={item.path}
                 onClick={onClose}
                 className={`flex items-center gap-3 px-5 py-4 transition-colors touch-manipulation ${
-                  isActive
-                    ? "font-semibold border-r-4"
-                    : "text-content-secondary hover:bg-surface-muted hover:text-content-primary active:bg-surface-subtle"
+                  isActive ? "font-semibold border-r-4" : "active:opacity-70"
                 }`}
                 style={isActive ? {
-                  backgroundColor: layoutTheme.activeItemBackground,
-                  color: layoutTheme.activeItemColor,
-                  borderRightColor: layoutTheme.activeItemColor,
-                } : undefined}
+                  backgroundColor: theme.activeItemBackground,
+                  color: theme.activeItemColor,
+                  borderRightColor: theme.activeItemColor,
+                } : { color: isDark ? "#A1A1AA" : "#6B7280" }}
               >
                 <item.icon size={20} className="flex-shrink-0" />
                 <span className="text-sm sm:text-base">{item.name}</span>
@@ -111,6 +114,21 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             );
           })}
         </nav>
+
+        {/* Theme toggle */}
+        <div className="px-5 pb-6 pt-4 border-t" style={{ borderColor: isDark ? "#3F3F46" : "#E5E7EB" }}>
+          <button
+            onClick={toggleTheme}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer"
+            style={{
+              backgroundColor: isDark ? "#3F3F46" : "#F3F4F6",
+              color: isDark ? "#A1A1AA" : "#6B7280",
+            }}
+          >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            <span className="text-sm font-medium">{isDark ? "Tema Claro" : "Tema Escuro"}</span>
+          </button>
+        </div>
       </aside>
     </>
   );

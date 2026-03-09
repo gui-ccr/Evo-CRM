@@ -26,8 +26,8 @@ export function ImportacoesTable({ importacoes }: ImportacoesTableProps) {
             className="bg-zinc-300 border border-zinc-600 rounded-lg p-4 space-y-3"
           >
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-evo-orange/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <FileSpreadsheet size={20} className="text-evo-orange" />
+              <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center shrink-0">
+                <FileSpreadsheet size={20} className="text-indigo-500" />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-indigo-500 text-sm truncate">{importacao.nomeArquivo}</h3>
@@ -76,12 +76,12 @@ export function ImportacoesTable({ importacoes }: ImportacoesTableProps) {
             {importacoes.map((importacao) => (
               <tr
                 key={importacao.id}
-                className="border-b border-indigo-500/10 hover:bg-zinc-300 transition-colors"
+                className="border-b border-indigo-500/10 hover:bg-gray-100 transition-colors"
               >
                 <td className="py-4 px-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-evo-orange/10 rounded-lg flex items-center justify-center">
-                      <FileSpreadsheet size={20} className="text-evo-orange" />
+                    <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                      <FileSpreadsheet size={20} className="text-indigo-500" />
                     </div>
                     <span className="font-medium text-indigo-500">
                       {importacao.nomeArquivo}
