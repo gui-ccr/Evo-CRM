@@ -4,7 +4,7 @@ import { PerfilSection } from './components/PerfilSection';
 
 export function Configuracoes() {
   return (
-    <div className="p-8 space-y-8 bg-evo-cyan-900 min-h-screen">
+    <div className="p-8 space-y-8">
       <ConfiguracoesHeader />
 
       <Card title="">

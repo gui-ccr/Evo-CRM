@@ -15,7 +15,7 @@ export function StatCard({ label, value, icon: Icon, trend, trendPositive }: Sta
         <p className='text-xs sm:text-sm font-medium text-zinc-600 mb-1.5 truncate'>{label}</p>
         <h3 className='text-xl sm:text-2xl font-bold text-indigo-500 break-words'>{value}</h3>
         {trend && (
-          <p className={`text-xs mt-1.5 sm:mt-2 font-medium ${trendPositive ? 'text-green-500' : 'text-red-500'}`}>
+          <p className={`text-xs mt-1.5 sm:mt-2 font-medium ${trendPositive ? 'text-emerald-600' : 'text-red-600'}`}>
             {trend}
           </p>
         )}

@@ -9,7 +9,7 @@ interface TemplatesListProps {
 export function TemplatesList({ templates }: TemplatesListProps) {
   if (templates.length === 0) {
     return (
-      <div className="text-center py-12 text-zinc-600">
+      <div className="text-center py-12 text-gray-500">
         <p>Nenhum template cadastrado.</p>
       </div>
     );
@@ -20,33 +20,33 @@ export function TemplatesList({ templates }: TemplatesListProps) {
       {templates.map((template) => (
         <div
           key={template.id}
-          className="bg-zinc-300/60 border border-zinc-600 rounded-lg p-3 sm:p-4 hover:border-evo-orange transition-colors"
+          className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 hover:border-indigo-400 hover:shadow-card transition-all"
         >
           <div className="flex items-start gap-2 sm:gap-3 mb-3">
             <TemplateTypeIcon tipo={template.tipo} />
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-indigo-500 mb-1 text-sm sm:text-base truncate">
+              <h3 className="font-semibold text-indigo-600 mb-1 text-sm sm:text-base truncate">
                 {template.nome}
               </h3>
-              <span className="text-[10px] sm:text-xs text-zinc-600">
+              <span className="text-[10px] sm:text-xs text-gray-500">
                 {template.tipo === 'whatsapp' ? 'WhatsApp' : 'E-mail'}
               </span>
             </div>
-            <button className="p-2 hover:bg-indigo-500/10 rounded-lg transition-colors touch-manipulation flex-shrink-0">
-              <Edit2 size={16} className="text-zinc-600" />
+            <button className="p-2 hover:bg-indigo-50 rounded-lg transition-colors touch-manipulation shrink-0">
+              <Edit2 size={16} className="text-gray-500" />
             </button>
           </div>
 
           {template.assunto && (
             <div className="mb-2">
-              <span className="text-[10px] sm:text-xs font-medium text-zinc-600">Assunto:</span>
-              <p className="text-xs sm:text-sm text-indigo-500 line-clamp-1">{template.assunto}</p>
+              <span className="text-[10px] sm:text-xs font-medium text-gray-500">Assunto:</span>
+              <p className="text-xs sm:text-sm text-indigo-600 line-clamp-1">{template.assunto}</p>
             </div>
           )}
 
           <div className="mb-3">
-            <span className="text-[10px] sm:text-xs font-medium text-zinc-600">Mensagem:</span>
-            <p className="text-xs sm:text-sm text-zinc-2000 line-clamp-3">
+            <span className="text-[10px] sm:text-xs font-medium text-gray-500">Mensagem:</span>
+            <p className="text-xs sm:text-sm text-gray-700 line-clamp-3">
               {template.mensagem}
             </p>
           </div>
@@ -56,7 +56,7 @@ export function TemplatesList({ templates }: TemplatesListProps) {
               {template.variaveis.map((variavel) => (
                 <span
                   key={variavel}
-                  className="px-1.5 sm:px-2 py-0.5 bg-indigo-500/20 text-indigo-500 text-[10px] sm:text-xs rounded"
+                  className="px-1.5 sm:px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] sm:text-xs rounded"
                 >
                   {`{{${variavel}}}`}
                 </span>

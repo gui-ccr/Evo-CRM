@@ -1,8 +1,8 @@
-# Dashboard Nexus EVO - CRM para EVO Coaching
+# Dashboard EVO - CRM para EVO Coaching
 
 ## Visão Geral
 
-Dashboard Nexus EVO é um CRM personalizado desenvolvido especialmente para o EVO Coaching, focado em gestão de leads, automação de mensageria (WhatsApp e E-mail) e análise de conversões de mentorias e programas de coaching.
+Dashboard EVO é um CRM personalizado desenvolvido especialmente para o EVO Coaching, focado em gestão de leads, automação de mensageria (WhatsApp e E-mail) e análise de conversões de mentorias e programas de coaching.
 
 ## Tecnologias Utilizadas
 
@@ -22,7 +22,7 @@ Dashboard Nexus EVO é um CRM personalizado desenvolvido especialmente para o EV
 
 ## Funcionalidades Principais
 
-### 1. Dashboard Nexus EVO (Executive View)
+### 1. Dashboard EVO (Executive View)
 - Cards de resumo: Total de Leads, Taxa de Conversão, ROI, Status dos Disparos
 - Gráfico de volume de novos leads vs. vendas
 - Tabela de conversões recentes

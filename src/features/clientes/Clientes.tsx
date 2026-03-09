@@ -70,7 +70,7 @@ export function Clientes() {
   };
 
   return (
-    <div className="p-8 space-y-8 bg-zinc-900 min-h-screen">
+    <div className="p-8 space-y-8">
       <ClientesHeader onAddClient={handleAddClient} />
 
       <ClientesStats stats={stats} />

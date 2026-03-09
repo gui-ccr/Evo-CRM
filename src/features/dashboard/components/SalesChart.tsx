@@ -122,7 +122,7 @@ export function SalesChart({
           <h3 className="text-base sm:text-lg font-semibold text-zinc-400">{title}</h3>
           <p className="text-xs sm:text-sm text-zinc-600">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/20">
+        <div className="flex items-center gap-2 text-emerald-700 bg-emerald-100 px-3 py-2 rounded-lg border border-emerald-300">
           <TrendingUp size={18} className="sm:w-5 sm:h-5 flex-shrink-0" />
           <span className="text-xs sm:text-sm font-medium">{months.length} meses</span>
         </div>

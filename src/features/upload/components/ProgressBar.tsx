@@ -16,26 +16,26 @@ export function ProgressBar({ progresso, status, arquivo, detalhes }: ProgressBa
   const statusConfig = {
     processando: {
       icon: Loader2,
-      iconClass: 'animate-spin text-blue-500',
+      iconClass: 'animate-spin text-blue-600',
       barColor: 'bg-blue-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-300',
       label: 'Processando...',
     },
     concluido: {
       icon: CheckCircle,
-      iconClass: 'text-emerald-500',
+      iconClass: 'text-emerald-600',
       barColor: 'bg-emerald-500',
-      bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30',
+      bgColor: 'bg-emerald-50',
+      borderColor: 'border-emerald-300',
       label: 'Concluído!',
     },
     erro: {
       icon: XCircle,
-      iconClass: 'text-red-500',
+      iconClass: 'text-red-600',
       barColor: 'bg-red-500',
-      bgColor: 'bg-red-500/10',
-      borderColor: 'border-red-500/30',
+      bgColor: 'bg-red-50',
+      borderColor: 'border-red-300',
       label: 'Erro no processamento',
     },
   };
@@ -75,11 +75,11 @@ export function ProgressBar({ progresso, status, arquivo, detalhes }: ProgressBa
           </div>
           <div>
             <p className="text-xs text-zinc-600">Novos</p>
-            <p className="text-lg font-bold text-emerald-500">{detalhes.novos}</p>
+            <p className="text-lg font-bold text-emerald-600">{detalhes.novos}</p>
           </div>
           <div>
             <p className="text-xs text-zinc-600">Duplicados</p>
-            <p className="text-lg font-bold text-yellow-500">{detalhes.duplicados}</p>
+            <p className="text-lg font-bold text-amber-600">{detalhes.duplicados}</p>
           </div>
         </div>
       )}

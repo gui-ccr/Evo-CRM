@@ -47,7 +47,7 @@ export function RecentSalesTable({ sales }: RecentSalesTableProps) {
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-zinc-600 mb-1">Valor</div>
-                  <div className="font-bold text-emerald-400">{formatCurrency(sale.amount)}</div>
+                  <div className="font-bold text-emerald-600">{formatCurrency(sale.amount)}</div>
                 </div>
               </div>
             </div>

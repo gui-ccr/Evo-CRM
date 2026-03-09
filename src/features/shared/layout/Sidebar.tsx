@@ -7,6 +7,7 @@ import {
   SendIcon,
   SettingsIcon,
 } from "lucide-react";
+import { layoutTheme } from "./layoutTheme";
 
 export function Sidebar() {
   const location = useLocation();
@@ -20,12 +21,12 @@ export function Sidebar() {
     { name: "Configurações", icon: SettingsIcon, path: "/configuracoes" },
   ];
 
-  const sidebarColor = "bg-evo-cyan-800";
-  const shadowColorHex = "#18181b";
-
   return (
-    <aside className={`w-56 ${sidebarColor} py-10 flex flex-col z-10 relative h-full`}>
-      <div className="px-8 mb-10 text-[#DCDCDD] font-bold text-xl">EVO Coaching</div>
+    <aside
+      className="w-56 border-r border-border py-10 flex flex-col z-10 relative h-full"
+      style={{ backgroundColor: layoutTheme.sidebarBackground }}
+    >
+      <div className="px-8 mb-10 text-content-primary font-bold text-xl">EVO Coaching</div>
       <ul>
         {menus.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
@@ -37,7 +38,7 @@ export function Sidebar() {
                 }`}
                 style={{
                   borderRadius: "0 0 100% 0",
-                  boxShadow: `30px 30px 0 24px ${shadowColorHex}`,
+                  boxShadow: `30px 30px 0 24px ${layoutTheme.connectorColor}`,
                   transformOrigin: "bottom right",
                 }}
               />
@@ -46,8 +47,13 @@ export function Sidebar() {
                 to={item.path}
                 className={`relative flex w-full items-center gap-4 px-8 h-14 transition-all duration-300 ease-in-out z-10
                     ${isActive
-                      ? `bg-evo-cyan-900 text-zinc-100 font-bold rounded-l-[50px] ml-4 w-[calc(100%-16px)] border-l-4 border-indigo-500`
-                      : "text-evo-cyan-400 hover:text-evo-cyan-200"}`}>
+                      ? "font-semibold rounded-l-[50px] ml-4 w-[calc(100%-16px)]"
+                      : "text-content-secondary hover:text-content-primary hover:bg-surface-subtle rounded-l-full ml-2 w-[calc(100%-8px)]"}`}
+                style={isActive ? {
+                  backgroundColor: layoutTheme.activeItemBackground,
+                  color: layoutTheme.activeItemColor,
+                } : undefined}
+              >
                 <item.icon size={20} />
                 <span>{item.name}</span>
               </Link>
@@ -58,7 +64,7 @@ export function Sidebar() {
                 }`}
                 style={{
                   borderRadius: "0 100% 0 0",
-                  boxShadow: `30px -30px 0 24px ${shadowColorHex}`,
+                  boxShadow: `30px -30px 0 24px ${layoutTheme.connectorColor}`,
                   transformOrigin: "top right",
                 }}
               />

@@ -27,9 +27,9 @@ export function Dashboard() {
   } = useDashboardData();
 
   return (
-    <div className="p-8 space-y-8 bg-evo-cyan-900 min-h-screen">
+    <div className="p-8 space-y-8">
       <DashboardHeader
-        title="Dashboard Nexus EVO"
+        title="Dashboard EVO Coaching"
         subtitle="Visão executiva do seu negócio de coaching"
       />
 

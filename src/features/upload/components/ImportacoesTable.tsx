@@ -39,11 +39,11 @@ export function ImportacoesTable({ importacoes }: ImportacoesTableProps) {
             <div className="grid grid-cols-2 gap-3 pt-3 border-t border-zinc-600">
               <div className="text-center">
                 <div className="text-[10px] text-zinc-600 mb-1">Leads Novos</div>
-                <div className="font-bold text-emerald-500">{importacao.qtdLeadsNovos}</div>
+                <div className="font-bold text-emerald-600">{importacao.qtdLeadsNovos}</div>
               </div>
               <div className="text-center">
                 <div className="text-[10px] text-zinc-600 mb-1">Duplicados</div>
-                <div className="font-bold text-yellow-500">{importacao.qtdLeadsDuplicados}</div>
+                <div className="font-bold text-amber-600">{importacao.qtdLeadsDuplicados}</div>
               </div>
             </div>
           </div>
@@ -92,12 +92,12 @@ export function ImportacoesTable({ importacoes }: ImportacoesTableProps) {
                   {formatDateTime(importacao.dataUpload)}
                 </td>
                 <td className="py-4 px-4">
-                  <span className="font-semibold text-emerald-500">
+                  <span className="font-semibold text-emerald-600">
                     {importacao.qtdLeadsNovos}
                   </span>
                 </td>
                 <td className="py-4 px-4">
-                  <span className="font-semibold text-yellow-500">
+                  <span className="font-semibold text-amber-600">
                     {importacao.qtdLeadsDuplicados}
                   </span>
                 </td>
