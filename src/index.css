@@ -197,9 +197,6 @@ input, textarea, select, button {
   background-color: #52525B !important;
 }
 
-[data-theme="dark"] .hover\:bg-black\/5:hover {
-  background-color: rgba(255, 255, 255, 0.06) !important;
-}
 
 [data-theme="dark"] .hover\:bg-indigo-50:hover {
   background-color: #312E81 !important;

@@ -52,17 +52,17 @@ export function Sidebar() {
 
               <Link
                 to={item.path}
-                className={`relative flex w-full items-center gap-4 px-8 h-14 transition-all duration-300 ease-in-out z-10
+                className={`group relative flex w-full items-center gap-4 px-8 h-14 transition-all duration-300 ease-in-out z-10
                     ${isActive
                       ? "font-semibold rounded-l-[50px] ml-4 w-[calc(100%-16px)]"
-                      : "rounded-l-full ml-2 w-[calc(100%-8px)] hover:bg-black/5"}`}
+                      : "rounded-l-full ml-2 w-[calc(100%-8px)]"}`}
                 style={isActive ? {
                   backgroundColor: theme.activeItemBackground,
                   color: theme.activeItemColor,
                 } : { color: inactiveTextColor }}
               >
-                <item.icon size={20} />
-                <span>{item.name}</span>
+                <item.icon size={20} className={isActive ? '' : 'transition-colors group-hover:text-indigo-400'} />
+                <span className={isActive ? '' : 'transition-colors group-hover:text-indigo-400'}>{item.name}</span>
               </Link>
 
               <div

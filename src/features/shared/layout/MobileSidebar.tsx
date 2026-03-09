@@ -99,8 +99,8 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                 key={item.name}
                 to={item.path}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-5 py-4 transition-colors touch-manipulation ${
-                  isActive ? "font-semibold border-r-4" : "active:opacity-70"
+                className={`group flex items-center gap-3 px-5 py-4 transition-colors touch-manipulation ${
+                  isActive ? "font-semibold border-r-4" : ""
                 }`}
                 style={isActive ? {
                   backgroundColor: theme.activeItemBackground,
@@ -108,8 +108,8 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                   borderRightColor: theme.activeItemColor,
                 } : { color: isDark ? "#A1A1AA" : "#6B7280" }}
               >
-                <item.icon size={20} className="flex-shrink-0" />
-                <span className="text-sm sm:text-base">{item.name}</span>
+                <item.icon size={20} className={`shrink-0 ${isActive ? '' : 'transition-colors group-hover:text-indigo-400'}`} />
+                <span className={`text-sm sm:text-base ${isActive ? '' : 'transition-colors group-hover:text-indigo-400'}`}>{item.name}</span>
               </Link>
             );
           })}
