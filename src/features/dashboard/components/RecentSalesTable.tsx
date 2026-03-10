@@ -6,7 +6,7 @@ import { PaymentBadge } from './PaymentBadge';
 import { useLayoutTheme } from '../../shared/layout/ThemeContext';
 import type { Sale } from '../../shared/types';
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 10;
 
 interface RecentSalesTableProps {
   sales: Sale[];

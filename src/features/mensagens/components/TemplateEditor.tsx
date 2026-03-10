@@ -18,11 +18,7 @@ interface TemplateEditorProps {
 const variaveisDisponiveis = [
   { nome: 'nome', descricao: 'Nome do lead' },
   { nome: 'email', descricao: 'E-mail do lead' },
-  { nome: 'telefone', descricao: 'Telefone do lead' },
-  { nome: 'evento', descricao: 'Nome do evento' },
-  { nome: 'horario', descricao: 'Horário da aula' },
-  { nome: 'link', descricao: 'Link de pagamento' },
-  { nome: 'programa', descricao: 'Nome do programa' },
+  { nome: 'cpf', descricao: 'CPF do lead' },
   { nome: 'data', descricao: 'Data específica' },
 ];
 
@@ -61,12 +57,12 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
     let preview = mensagem;
     extrairVariaveis(mensagem).forEach(variavel => {
       const exemplo = variavel === 'nome' ? 'João Silva' :
-                     variavel === 'evento' ? 'Evento SP - Novembro' :
-                     variavel === 'horario' ? '18h00' :
-                     variavel === 'link' ? 'https://evo.com.br/pagamento' :
-                     variavel === 'programa' ? 'Mentoria Premium' :
-                     variavel === 'data' ? '25/11/2025' :
-                     `[${variavel}]`;
+        variavel === 'evento' ? 'Evento SP - Novembro' :
+          variavel === 'horario' ? '18h00' :
+            variavel === 'link' ? 'https://evo.com.br/pagamento' :
+              variavel === 'programa' ? 'Mentoria Premium' :
+                variavel === 'data' ? '25/11/2025' :
+                  `[${variavel}]`;
       preview = preview.replace(new RegExp(`\\{\\{${variavel}\\}\\}`, 'g'), exemplo);
     });
     return preview;
@@ -158,8 +154,7 @@ export function TemplateEditor({ isOpen, onClose, onSave }: TemplateEditorProps)
                   className="flex items-center gap-1 px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors text-sm cursor-pointer"
                   title={variavel.descricao}
                 >
-                  <Plus size={14} />
-                  {`{{${variavel.nome}}}`}
+                  {`#${variavel.nome}#`}
                 </button>
               ))}
             </div>
