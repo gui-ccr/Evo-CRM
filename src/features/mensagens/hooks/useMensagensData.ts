@@ -6,23 +6,23 @@ export function useMensagensData() {
       id: '1',
       nome: 'Boas-vindas WhatsApp',
       tipo: 'whatsapp',
-      mensagem: 'Olá {{nome}}! Bem-vindo ao EVO Coaching. Sua jornada de transformação começa agora!',
+      mensagem: 'Olá #nome#! Bem-vindo ao EVO Coaching. Sua jornada de transformação começa agora!',
       variaveis: ['nome'],
     },
     {
       id: '2',
       nome: 'Lembrete de Aula ao Vivo',
       tipo: 'whatsapp',
-      mensagem: 'Oi {{nome}}! Lembrete: Aula ao vivo hoje às {{horario}}. Link: {{link}}',
-      variaveis: ['nome', 'horario', 'link'],
+      mensagem: 'Oi #nome#! Lembrete: Aula ao vivo hoje às #data#.',
+      variaveis: ['nome', 'data'],
     },
     {
       id: '3',
       nome: 'Confirmação de Mentoria',
       tipo: 'email',
       assunto: 'Confirmação - Sua Mentoria EVO Coaching',
-      mensagem: 'Olá {{nome}}, confirmamos sua inscrição na mentoria {{programa}}.',
-      variaveis: ['nome', 'programa'],
+      mensagem: 'Olá #nome#, confirmamos que seu #email# foi inscrito na mentoria!',
+      variaveis: ['nome', 'email'],
     },
   ];
 
