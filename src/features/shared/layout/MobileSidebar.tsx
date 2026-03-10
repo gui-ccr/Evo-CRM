@@ -67,7 +67,7 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
       {/* Sidebar */}
       <aside
         ref={asideRef}
-        className="fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] border-r border-border z-50 lg:hidden overflow-y-auto flex flex-col"
+        className="no-theme-transition fixed top-0 left-0 h-full w-72 sm:w-80 max-w-[85vw] border-r border-border z-50 lg:hidden overflow-y-auto flex flex-col"
         style={{
           backgroundColor: theme.sidebarBackground,
           transform: "translateX(-100%)",
