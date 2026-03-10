@@ -116,7 +116,7 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
         </nav>
 
         {/* Theme toggle */}
-        <div className="px-5 pb-6 pt-4 border-t" style={{ borderColor: isDark ? "#3F3F46" : "#E5E7EB" }}>
+        {/* <div className="px-5 pb-6 pt-4 border-t" style={{ borderColor: isDark ? "#3F3F46" : "#E5E7EB" }}>
           <button
             onClick={toggleTheme}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer"
@@ -128,7 +128,7 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
             <span className="text-sm font-medium">{isDark ? "Tema Claro" : "Tema Escuro"}</span>
           </button>
-        </div>
+        </div> */}
       </aside>
     </>
   );
